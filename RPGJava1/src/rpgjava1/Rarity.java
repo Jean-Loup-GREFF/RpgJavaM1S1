@@ -10,5 +10,22 @@ package rpgjava1;
  * @author Matthieu
  */
 public enum Rarity {
+    COMMUN (0),
+    UNCOMMUN (1),
+    RARE (2),
+    EPIC (3),
+    LEGENDARY (4),
+    MYTIC (5),
+    GODLIKE (6);
     
+    private Integer rarity;
+    
+    private Rarity(int rarity){
+        this.rarity = rarity;
+    }
+    
+    @Override
+    public String toString() {
+        return rarity.toString();
+    }
 }
