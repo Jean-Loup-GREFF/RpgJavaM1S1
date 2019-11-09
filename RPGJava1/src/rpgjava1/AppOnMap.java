@@ -10,5 +10,13 @@ package rpgjava1;
  * @author Matthieu
  */
 public class AppOnMap {
+    private char display;
     
+    public AppOnMap(char display){
+        this.display = display;
+    }
+    
+    public char getDisplay(){
+        return this.display;
+    }
 }
