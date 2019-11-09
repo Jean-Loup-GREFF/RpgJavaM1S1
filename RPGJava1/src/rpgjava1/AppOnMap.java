@@ -19,4 +19,9 @@ public class AppOnMap {
     public char getDisplay(){
         return this.display;
     }
+
+    public void setDisplay(char display) {
+        this.display = display;
+    }
+ 
 }
