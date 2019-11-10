@@ -137,4 +137,20 @@ public class Land {
         
         return test;
     }
+    
+    public ArrayList<ArrayList<AppOnMap>> getMap (){
+        ArrayList<ArrayList<AppOnMap>> Save;
+        Save = new ArrayList<>();
+        for (ArrayList<Integer> i : this.Map){
+            ArrayList<AppOnMap> line; 
+            line = new ArrayList<>();
+            for (Integer j : i){
+                line.add(this.ElemMap.get(j));   
+            }
+            Save.add(line);
+        
+    }
+        return Save;     
+             
+    }
 }
