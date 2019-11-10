@@ -9,16 +9,13 @@ package rpgjava1;
  *
  * @author Jean-Loup
  */
-public class Wall extends AppOnMap{
+public class VoidCase extends AppOnMap{
     
-    public Wall() {
-        super('#');
+    public VoidCase() {
+        super(' ');
     }
 
     public char getDisplay(){
         return super.getDisplay();
     }
-    
-    
-      
 }

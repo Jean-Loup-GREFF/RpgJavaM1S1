@@ -71,7 +71,70 @@ public class Land {
         return name;
     }
     
-    public void moveTo (Integer x, Integer y, Integer Bouton){
+    public void changeElem (Integer x, Integer y, AppOnMap news){
+                if(!this.ElemMap.contains(news)){
+                    this.Map.get(y).set(x,this.ElemMap.size());
+                    this.ElemMap.add(news);
+                }
+                else{
+                    this.Map.get(y).set(x,this.ElemMap.indexOf(news));
+                }
+    }
+    
+    public int moveTo (Integer x, Integer y, Integer Bouton){
         
+        VoidCase voids = new VoidCase();
+        int test = 1;
+        AppOnMap temp = new AppOnMap();
+        
+        
+        
+        switch(Bouton){
+            case (0):
+                if (this.ElemMap.get(this.Map.get(y-1).get(x)) == voids){
+                    temp = this.ElemMap.get(this.Map.get(y-1).get(x));
+                    changeElem (x, y, voids);
+                    changeElem (x, y-1, temp);
+                }
+                else{
+                    test = 0;
+                }
+                break;
+            case(1):
+                if (this.ElemMap.get(this.Map.get(y).get(x-1)) == voids){
+                    temp = this.ElemMap.get(this.Map.get(y).get(x-1));
+                    changeElem (x, y, voids);
+                    changeElem (x-1, y, temp);
+                }
+                else{
+                    test = 0;
+                }
+                break;
+            case(2):
+                if (this.ElemMap.get(this.Map.get(y+1).get(x)) == voids){
+                    temp = this.ElemMap.get(this.Map.get(y+1).get(x));
+                    changeElem (x, y, voids);
+                    changeElem (x, y+1, temp);
+                }
+                else{
+                    test = 0;
+                }
+                break;
+            case(3):
+                if (this.ElemMap.get(this.Map.get(y).get(x+1)) == voids){
+                    temp = this.ElemMap.get(this.Map.get(y).get(x+1));
+                    changeElem (x, y, voids);
+                    changeElem (x+1, y, temp);
+                }
+                else{
+                    test = 0;
+                }
+                break;
+            
+            
+        }
+                
+        
+        return test;
     }
 }

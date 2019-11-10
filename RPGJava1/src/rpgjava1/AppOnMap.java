@@ -16,6 +16,10 @@ public class AppOnMap {
         this.display = display;
     }
     
+    public AppOnMap(){
+        this.display = ' ';
+    }
+    
     public char getDisplay(){
         return this.display;
     }
