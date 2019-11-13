@@ -5,6 +5,8 @@
  */
 package rpgjava1;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Matthieu
@@ -27,5 +29,18 @@ public class AppOnMap {
     public void setDisplay(char display) {
         this.display = display;
     }
- 
+    
+    public ArrayList<String> getDataSave(){
+        ArrayList<String> PartSave;
+        PartSave = new ArrayList<>();
+        return PartSave;
+    }
+    
+    public void InitFromSave(String[] Save){
+        this.display = Save[0].charAt(0);
+    }
+    
+    public String getSaveText(){
+        this.display = Save[0].charAt(0);
+    }
 }
