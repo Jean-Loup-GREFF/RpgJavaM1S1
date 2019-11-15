@@ -41,6 +41,6 @@ public class AppOnMap {
     }
     
     public String getSaveText(){
-        this.display = Save[0].charAt(0);
+        return ""+this.display;
     }
 }

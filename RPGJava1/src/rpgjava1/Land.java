@@ -5,7 +5,15 @@
  */
 package rpgjava1;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Land {
     private String name;
@@ -194,5 +202,88 @@ public class Land {
              
     }
     
+    public void initMapFromSave(String nameProf, String nameMap){
+        this.name = nameMap;
+        try{
+        InputStream flux=new FileInputStream("C:\\Game\\Save\\ANewDawn\\"+nameProf+"\\"+ this.name +".txt"); 
+        InputStreamReader lecture=new InputStreamReader(flux);
+        BufferedReader buff=new BufferedReader(lecture);
+        String line;
+        String[] objects;
+        String[] type;
+        ArrayList<ArrayList<AppOnMap>> map;
+        ArrayList<AppOnMap> lineMap;
+        AppOnMap elem;
+        int testNameMap = 0;
+        int lenObjectLine;
+        int i, j;
+        map = new ArrayList<>();
+        lineMap = new ArrayList<>();
+        elem = new AppOnMap();
+        
+        while ((line = buff.readLine())!=null){
+            
+                if (testNameMap == 0){
+                    testNameMap = 1;
+                }
+                
+                else{
+                    objects = line.split(";");
+                    lenObjectLine = objects.length;
+                    for (i = 0; i < lenObjectLine; i++){
+                        type = objects[i].split(",");
+                        elem.InitFromSave(type);
+                        lineMap.add(elem);
+                    }
+                    map.add(lineMap);
+                }
+        }
+        InitMap(map);
+        buff.close(); 
+        }		
+        catch (Exception e){
+        System.out.println("Your save have been corrupted");
+        }
+    }
+        
+    public void saveMap(String name){
+        try{
+        File ff; // définir l'arborescence
+        ff = new File("C:\\Game\\Save\\ANewDawn\\"+name+"\\"+ this.name +".txt");
+        ArrayList<ArrayList<AppOnMap>> Save;
+        Save = new ArrayList<>();
+        Save = getMap();
+        int test = 1;
+        int limitLine = 0;
+        
+        
+        
+        ff.createNewFile();
+        FileWriter ffw = new FileWriter(ff);
+        ffw.write(this.name);  // écrire une ligne dans le fichier resultat.txt
+        ffw.write("\n"); // forcer le passage à la ligne
+        
+        for (ArrayList<AppOnMap> y : Save){
+            String SaveLine = "";
+            ArrayList<Integer> line; 
+            line = new ArrayList<>();
+            limitLine = y.size();
+            for (AppOnMap x : y){
+                SaveLine += x.getSaveText();
+                if (!(test == limitLine)){
+                    SaveLine += ";";
+                }
+                else{
+                    ffw.write(SaveLine);
+                    ffw.write("\n");
+                }
+                }
+            }
+        
+        ffw.close(); // fermer le fichier à la fin des traitements
+        } 
+        catch (Exception e) {}
+    
+}
     
 }
