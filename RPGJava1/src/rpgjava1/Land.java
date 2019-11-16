@@ -222,21 +222,14 @@ public class Land {
         elem = new AppOnMap();
         
         while ((line = buff.readLine())!=null){
-            
-                if (testNameMap == 0){
-                    testNameMap = 1;
+                objects = line.split(";");
+                lenObjectLine = objects.length;
+                for (i = 0; i < lenObjectLine; i++){
+                    type = objects[i].split(",");
+                    elem.InitFromSave(type);
+                    lineMap.add(elem);
                 }
-                
-                else{
-                    objects = line.split(";");
-                    lenObjectLine = objects.length;
-                    for (i = 0; i < lenObjectLine; i++){
-                        type = objects[i].split(",");
-                        elem.InitFromSave(type);
-                        lineMap.add(elem);
-                    }
-                    map.add(lineMap);
-                }
+                map.add(lineMap);
         }
         InitMap(map);
         buff.close(); 
