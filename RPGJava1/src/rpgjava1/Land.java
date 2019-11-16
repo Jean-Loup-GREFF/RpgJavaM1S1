@@ -62,6 +62,21 @@ public class Land {
         
     }
     
+    public AppOnMap getEntity (int x,int y){
+        return ElemMap.get(Map.get(y).get(x));
+    }
+    
+    public AppOnMap getPlayer (){
+        AppOnMap player;
+        player = new AppOnMap();
+        for (AppOnMap i : ElemMap)
+            if ("Player" == i.getClass().getSimpleName()){
+                player = i;
+                break;
+            }
+        return player;
+    }
+    
     public void InitMap(ArrayList<ArrayList<AppOnMap>> Save){
         
         // Save is an array list with first element name of the map
@@ -205,7 +220,7 @@ public class Land {
     public void initMapFromSave(String nameProf, String nameMap){
         this.name = nameMap;
         try{
-        InputStream flux=new FileInputStream("C:\\Game\\Save\\ANewDawn\\"+nameProf+"\\"+ this.name +".txt"); 
+        InputStream flux=new FileInputStream("C:\\Game\\ANewDawn\\Save\\"+nameProf+"\\"+ this.name +".txt"); 
         InputStreamReader lecture=new InputStreamReader(flux);
         BufferedReader buff=new BufferedReader(lecture);
         String line;
@@ -249,7 +264,7 @@ public class Land {
     public void saveMap(String name){
         try{
         File ff; // définir l'arborescence
-        ff = new File("C:\\Game\\Save\\ANewDawn\\"+name+"\\"+ this.name +".txt");
+        ff = new File("C:\\Game\\ANewDawn\\Save\\"+name+"\\"+ this.name +".txt");
         ArrayList<ArrayList<AppOnMap>> Save;
         Save = new ArrayList<>();
         Save = getMap();
@@ -260,8 +275,6 @@ public class Land {
         
         ff.createNewFile();
         FileWriter ffw = new FileWriter(ff);
-        ffw.write(this.name);  // écrire une ligne dans le fichier resultat.txt
-        ffw.write("\n"); // forcer le passage à la ligne
         
         for (ArrayList<AppOnMap> y : Save){
             String SaveLine = "";
@@ -277,6 +290,7 @@ public class Land {
                     ffw.write(SaveLine);
                     ffw.write("\n");
                 }
+                test ++;
                 }
             }
         
