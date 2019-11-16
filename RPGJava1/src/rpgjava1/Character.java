@@ -9,7 +9,7 @@ package rpgjava1;
  *
  * @author Matthieu
  */
-public class Character extends AppOnMap implements GiveDamage{
+public class Character extends AppOnMap implements DealsDamage{
     private String name;
     private int level;
     private int health;
@@ -22,6 +22,21 @@ public class Character extends AppOnMap implements GiveDamage{
     private Inventory inventory;
     private boolean isAlive;
 
+    public Character(String name){
+        super();
+        this.name = name;
+        this.level = 1;
+        this.health = 10;
+        this.healthM = 10;
+        this.strenght = 2;
+        this.vitality = 1;
+        this.dextirity = 1;
+        this.agility = 1;
+        this.intelligence = 1;
+        this.inventory = new Inventory();
+        this.isAlive = true;
+    }
+    
     public Character(String name, int level, int health, int healthM, int strenght, int vitality, int dextirity, int agility, int intelligence, Inventory inventory, boolean isAlive, char display) {
         super(display);
         this.name = name;
@@ -124,8 +139,6 @@ public class Character extends AppOnMap implements GiveDamage{
     public void setIsAlive(boolean isAlive) {
         this.isAlive = isAlive;
     }
-    
-    
     
     public void defence(int damage){
         this.health -= damage;

@@ -9,7 +9,7 @@ package rpgjava1;
  *
  * @author Matthieu
  */
-public interface GiveDamage {
+public interface DealsDamage {
     static int attack(int str){
         return str;
     }
