@@ -3,15 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package rpgjava1;
 
 /**
  *
  * @author Jean-Loup
  */
 public class Statistic {
-    private int hp;
-    private int mp;
-    private int sp;
     private int strenght;
     private int vitality;
     private int dexterity;
@@ -19,12 +17,18 @@ public class Statistic {
     private int intelligence;
     private int wisdom;
     private int luck;
-    
 
-    public Statistic(int hp, int mp, int sp, int strenght, int vitality, int dexterity, int agility, int intelligence, int wisdom, int luck) {
-        this.hp = hp;
-        this.mp = mp;
-        this.sp = sp;
+    public Statistic(){
+        this.strenght = 1;
+        this.vitality = 1;
+        this.dexterity = 1;
+        this.agility = 1;
+        this.intelligence = 1;
+        this.wisdom = 1;
+        this.luck = 100;
+    }
+
+    public Statistic(int strenght, int vitality, int dexterity, int agility, int intelligence, int wisdom, int luck) {
         this.strenght = strenght;
         this.vitality = vitality;
         this.dexterity = dexterity;
@@ -32,18 +36,6 @@ public class Statistic {
         this.intelligence = intelligence;
         this.wisdom = wisdom;
         this.luck = luck;
-    }
-
-    public int getHp() {
-        return hp;
-    }
-
-    public int getMp() {
-        return mp;
-    }
-
-    public int getSp() {
-        return sp;
     }
 
     public int getStrenght() {
@@ -73,19 +65,7 @@ public class Statistic {
     public int getLuck() {
         return luck;
     }
-
-    public void setHp(int hp) {
-        this.hp = hp;
-    }
-
-    public void setMp(int mp) {
-        this.mp = mp;
-    }
-
-    public void setSp(int sp) {
-        this.sp = sp;
-    }
-
+    
     public void setStrenght(int strenght) {
         this.strenght = strenght;
     }
@@ -114,4 +94,24 @@ public class Statistic {
         this.luck = luck;
     }
     
+    public int multiplicationAndAdd(Statistic stats){
+        int calc = this.getAgility()*stats.getAgility() 
+                + this.getDexterity()*stats.getDexterity() 
+                + this.getIntelligence()*stats.getIntelligence() 
+                + this.getLuck()*stats.getLuck() 
+                + this.getStrenght()*stats.getStrenght() 
+                + this.getVitality()*stats.getVitality() 
+                + this.getWisdom()*stats.getWisdom();
+        return calc;
+    }
+    
+    public Statistic add(Statistic stats){
+        this.agility+=stats.getAgility();
+        this.dexterity=stats.getDexterity(); 
+        this.intelligence+=stats.getIntelligence(); 
+        this.strenght+=stats.getStrenght(); 
+        this.vitality+=stats.getVitality(); 
+        this.wisdom+=stats.getWisdom();
+        return this;
+    }
 }
