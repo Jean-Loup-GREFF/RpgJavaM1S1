@@ -25,11 +25,22 @@ public class Game {
     private Land currentMap;
     private ArrayList<String[]> profiles;
     private int currentProfile;
+
+    public Game(){
+        this.currentMap = new Land();
+        this.profiles = new ArrayList<>();
+    }
+    
+    public Game(Land currentMap, ArrayList<String[]> profiles, int currentProfile) {
+        this.currentMap = currentMap;
+        this.profiles = profiles;
+        this.currentProfile = currentProfile;
+    }
     
     public void initProfiles(String name) throws FileNotFoundException{
         
         try{
-        InputStream flux=new FileInputStream("profiles\\"+name+".txt"); 
+        InputStream flux=new FileInputStream("profiles\\"+"profiles"+".txt"); 
         InputStreamReader lecture=new InputStreamReader(flux);
         BufferedReader buff=new BufferedReader(lecture);
         String line;
@@ -61,8 +72,8 @@ public class Game {
         String[] profile;
         profile = new String[2];
         profile[0] = name;
-        this.currentMap.initMapFromSave("init", "Twilight's_Castle");
-        profile[1] = currentMap.getName();
+        //this.currentMap.initMapFromSave("init", "Twilight's_Castle");
+        //profile[1] = currentMap.getName();
         try{
             this.currentProfile = this.profiles.size();
             this.profiles.add(profile);
@@ -95,8 +106,11 @@ public class Game {
         profile[1] = this.currentMap.getName();
         this.profiles.set(this.currentProfile, profile);
         try{
+        String dirName = "profiles\\";
+        File dir = new File(dirName);
+        boolean isCreated = dir.mkdirs();
         File ff; // définir l'arborescence
-        ff = new File("C:\\Game\\ANewDawn\\Save\\"+this.profiles.get(this.currentProfile)[0]+"\\"+ this.currentMap.getName() +".txt");
+        ff = new File("profiles\\"+"profiles"+".txt");
         
         ff.createNewFile();
         FileWriter ffw = new FileWriter(ff);
@@ -116,7 +130,7 @@ public class Game {
 
     }
     
-    public void writeSave(String name){
+    public void writeSave(){
         this.currentMap.saveMap(this.profiles.get(this.currentProfile)[0]);
         saveProfile();
         
@@ -135,5 +149,12 @@ public class Game {
         this.profiles.get(this.currentProfile)[1] = this.currentMap.getName();
     }
     
+    public void addElemMap (AppOnMap Elem, int x, int y){
+        this.currentMap.addElemMap(Elem, x, y);
+    }
+    
+    public void displayMap (){
+        this.currentMap.displayMap();
+    }
     
 }

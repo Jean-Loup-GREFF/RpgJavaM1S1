@@ -20,9 +20,23 @@ public class Land {
     private String name;
     private ArrayList<AppOnMap> elemMap;
     private ArrayList<ArrayList<Integer>> map;
+
+    public Land() {
+        this.name = "";
+        this.elemMap = new ArrayList();
+        this.map = new ArrayList();
+    }
+   
+    public Land(String name, ArrayList<AppOnMap> elemMap, ArrayList<ArrayList<Integer>> map) {
+        this.name = name;
+        this.elemMap = elemMap;
+        this.map = map;
+    }
+    
     
     
     public void InitMap(){
+        this.name = new String();
         this.name = "";
         this.elemMap = new ArrayList<>();
         this.map = new ArrayList<>();
@@ -125,8 +139,9 @@ public class Land {
         
         for (ArrayList<Integer> i : this.map){
             for (Integer j : i){
-                this.elemMap.get(j).getDisplay();
+                System.out.print(this.elemMap.get(j).getDisplay());
             }
+            System.out.println();
             
         }
     }
@@ -266,6 +281,9 @@ public class Land {
     public void saveMap(String name){
         try{
         File ff; // définir l'arborescence
+        String dirName = "C:\\Game\\ANewDawn\\Save\\"+name+"\\";
+        File dir = new File(dirName);
+        boolean isCreated = dir.mkdirs();
         ff = new File("C:\\Game\\ANewDawn\\Save\\"+name+"\\"+ this.name +".txt");
         ArrayList<ArrayList<AppOnMap>> Save;
         Save = new ArrayList<>();
@@ -298,65 +316,65 @@ public class Land {
         
         ffw.close(); // fermer le fichier à la fin des traitements
         } 
-        catch (Exception e) {}
+        catch (Exception e) {System.out.println("t'es une merde");}
     
 }
     
-    public void initMapFromSave2(String nameProf, String namemap){
-         Gson gson = new Gson();
+    //public void initMapFromSave2(String nameProf, String namemap){
+        // Gson gson = new Gson();
 
         //1. JSON to Java object, read it from a file.
-         Staff staff = gson.fromJson(new FileReader("D:\file.json"), Staff.class);
+        // Staff staff = gson.fromJson(new FileReader("D:\file.json"), Staff.class);
 
         //2. JSON to Java object, read it from a Json String.
-         String jsonInString = "{'name' : 'mkyong'}";
-         Staff staff = gson.fromJson(jsonInString, Staff.class);
+        // String jsonInString = "{'name' : 'mkyong'}";
+        // Staff staff = gson.fromJson(jsonInString, Staff.class);
 
         //JSON to JsonElement, convert to String later.
-         JsonElement json = gson.fromJson(new FileReader("D:\file.json"), JsonElement.class);
-         String result = gson.toJson(json);
-    }
+        // JsonElement json = gson.fromJson(new FileReader("D:\file.json"), JsonElement.class);
+        // String result = gson.toJson(json);
+    //}
         
-    public void saveMap2(String name){
-        Gson gson = new Gson();
-        Staff obj = new Staff();
-        try{
-        File ff; // définir l'arborescence
-        ff = new File("C:\\Game\\ANewDawn\\Save\\"+name+"\\"+ this.name +".txt");
-        ArrayList<ArrayList<AppOnMap>> Save;
-        Save = new ArrayList<>();
-        Save = getmap();
-        int test = 1;
-        int limitLine = 0;
+    //public void saveMap2(String name){
+        //Gson gson = new Gson();
+        //Staff obj = new Staff();
+        //try{
+        //File ff; // définir l'arborescence
+        //ff = new File("C:\\Game\\ANewDawn\\Save\\"+name+"\\"+ this.name +".txt");
+       // ArrayList<ArrayList<AppOnMap>> Save;
+        //Save = new ArrayList<>();
+        //Save = getmap();
+        //int test = 1;
+        //int limitLine = 0;
         
         
         
-        ff.createNewFile();
-        FileWriter ffw = new FileWriter(ff);
+        //ff.createNewFile();
+        //FileWriter ffw = new FileWriter(ff);
         
-        for (ArrayList<AppOnMap> y : Save){
-            String SaveLine = "";
-            ArrayList<Integer> line; 
-            line = new ArrayList<>();
-            limitLine = y.size();
-            for (AppOnMap x : y){
-                SaveLine += x.getSaveText();
-                if (!(test == limitLine)){
-                    SaveLine += ";";
-                }
-                else{
-                    ffw.write(SaveLine);
-                    ffw.write("\n");
-                }
-                test ++;
-                }
-            }
+        //for (ArrayList<AppOnMap> y : Save){
+            //String SaveLine = "";
+            //ArrayList<Integer> line; 
+           // line = new ArrayList<>();
+            //limitLine = y.size();
+            //for (AppOnMap x : y){
+               // SaveLine += x.getSaveText();
+                //if (!(test == limitLine)){
+               //     SaveLine += ";";
+                //}
+                //else{
+                //    ffw.write(SaveLine);
+                //    ffw.write("\n");
+                //}
+                //test ++;
+                //}
+            //}
         
-        ffw.close(); // fermer le fichier à la fin des traitements
-        } 
-        catch (Exception e) {}
+        //ffw.close(); // fermer le fichier à la fin des traitements
+        //} 
+        //catch (Exception e) {}
     
-}
+//}
     
     public boolean elemHere (AppOnMap Elem){
        
@@ -385,7 +403,7 @@ public class Land {
                         }
                         i++;
                     }
-                }
+                }//
                 catch(Exception e){}
         return i;
     }
