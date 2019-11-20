@@ -5,6 +5,8 @@
  */
 package rpgjava1;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Matthieu
@@ -16,6 +18,31 @@ public class RPGJava1 {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        Player p = new Player(0,0,new ClasslessClass(),"M",1,10,10,new Statistic(),new Inventory(),true,'@');
+        Character c = new Character("Monster",1,5,5,new Statistic(),new Inventory(),true,'A');
+        fight(p,c);
+    }
+    
+    public static void fight(Character c1, Character c2){
+        ArrayList<Character> c = new ArrayList<>();
+        if(c1.getStats().getAgility() > c2.getStats().getAgility()){
+            c.add(c1);
+            c.add(c2);
+        }
+        if(c1.getStats().getAgility() > c2.getStats().getAgility()){
+            c.add(c2);
+            c.add(c1);
+        }
+        if(c1.getStats().getAgility() == c2.getStats().getAgility()){
+            c.add(c1);
+            c.add(c2);
+        }
+        System.out.println(c.get(0).getName() + " attaque " + c.get(1).getName() + " en premier");
+        int i = 0;
+        while (c.get(0).isIsAlive() || c.get(1).isIsAlive()){
+            c.get(i%2).attack(c.get((i+1)%2));
+            System.out.println(c.get((i+1)%2).getHealth());
+        }
     }
     
 }
