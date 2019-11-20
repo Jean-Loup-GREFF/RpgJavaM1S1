@@ -21,6 +21,14 @@ public class RPGJava1 {
         Player p = new Player(0,0,new ClasslessClass(),"M",1,10,10,new Statistic(),new Inventory(),true,'@');
         Character c = new Character("Monster",1,5,5,new Statistic(),new Inventory(),true,'A');
         fight(p,c);
+        Game game;
+        game = new Game();
+        Wall wall = new Wall();
+        game.addElemMap(wall, 90, 0);
+        game.addElemMap(wall, 0, 90);
+        game.displayMap();
+        game.initNewProfile("j'enaimarre");
+        game.writeSave();
     }
     
     public static void fight(Character c1, Character c2){

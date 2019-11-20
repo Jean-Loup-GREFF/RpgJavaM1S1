@@ -301,6 +301,7 @@ public class Land {
             ArrayList<Integer> line; 
             line = new ArrayList<>();
             limitLine = y.size();
+            test = 1;
             for (AppOnMap x : y){
                 SaveLine += x.getSaveText();
                 if (!(test == limitLine)){
