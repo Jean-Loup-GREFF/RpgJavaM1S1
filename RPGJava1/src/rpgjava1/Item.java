@@ -16,6 +16,13 @@ public class Item {
     private Statistic stats;
     private String description;
 
+    public Item() {
+        this.name = "";
+        this.rarity = Rarity.COMMUN;
+        this.price = 0;
+        this.stats = new Statistic();
+    }
+    
     public Item(String name, Rarity rarity, int price, Statistic stats, String description) {
         this.name = name;
         this.rarity = rarity;
@@ -56,4 +63,44 @@ public class Item {
         this.stats = stats;
     }
     
+    public void InitFromSaveIt (String[] save){
+        this.name = save[0];
+        switch (Integer.parseInt(save[1])){
+            case 0:
+                this.rarity = Rarity.COMMUN;
+                break;
+            case 1:
+                this.rarity = Rarity.UNCOMMUN;
+                break;
+            case 2:
+                this.rarity = Rarity.RARE;
+                break;
+            case 3:
+                this.rarity = Rarity.EPIC;
+                break;
+            case 4:
+                this.rarity = Rarity.LEGENDARY;
+                break;
+            case 5:
+                this.rarity = Rarity.MYTIC;
+                break;
+            case 6:
+                this.rarity = Rarity.GODLIKE;
+                break;
+        }
+        this.price = Integer.parseInt(save[2]);
+        this.stats.InitFromSaveStat(save[3].split("/"));
+    }
+    
+    public String getSaveTextIt (){
+        String save = "";
+        save += this.name + "%";
+        save += this.rarity + "%";
+        save += this.price + "%";
+        save += this.stats.getSaveTextStat() + "%";
+        save += this.description;
+        
+        return save;
+        
+    }
 }

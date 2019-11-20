@@ -36,8 +36,8 @@ public class AppOnMap {
         return PartSave;
     }
     
-    public void InitFromSave(String[] Save){
-        this.display = Save[0].charAt(0);
+    public void InitFromSave(String Save){
+        this.display = Save.charAt(0);
     }
     
     public String getSaveText(){
