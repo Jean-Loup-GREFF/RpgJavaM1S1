@@ -55,5 +55,13 @@ public class Item {
     public void setStats(Statistic stats) {
         this.stats = stats;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
     
 }

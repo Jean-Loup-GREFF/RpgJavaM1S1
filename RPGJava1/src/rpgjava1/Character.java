@@ -102,7 +102,7 @@ public class Character extends AppOnMap implements DealsDamage{
     
     public void defence(int damage){
         this.health -= damage;
-        this.isAlive = this.health <= 0;
+        this.isAlive = this.health > 0;
     }
     
     public void speak(){
