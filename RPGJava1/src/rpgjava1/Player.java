@@ -15,19 +15,24 @@ public class Player extends Character implements DealsDamage{
     private int exp;
     private int expM;
     private ClassArchetype archetype;
+    //weapon, head, torso, pant, gauntlets, amulet, ri,g
+    private int[] equipment;
 
     public Player(String name){
         super(name);
         this.exp = 0;
         this.expM = 0;
         this.archetype = new ClasslessClass();
+        int[] tmp = {-1,-1,-1,-1,-1,-1,-1};
+        this.equipment = tmp;
     }
     
-    public Player(int exp, int expM, ClassArchetype archetype, String name, int level, int health, int healthM, Statistic stats, Inventory inventory, boolean isAlive, char display) {
-        super(name, level, health, healthM, stats, inventory, isAlive,display);
+    public Player(int exp, int expM, ClassArchetype archetype, String name, int level, int health, int healthM, Statistic stats, Inventory inventory, boolean isAlive, char display, int[] equipment) {
+        super(name, level, health, healthM, stats, inventory, isAlive, display);
         this.exp = exp;
         this.expM = expM;
         this.archetype = archetype;
+        this.equipment = equipment;
         super.setStats(this.archetype.getStatsGrow());
         
     }
@@ -56,6 +61,14 @@ public class Player extends Character implements DealsDamage{
         this.archetype = archetype;
     }
 
+    public int[] getEquipment() {
+        return equipment;
+    }
+
+    public void setEquipment(int[] equipment) {
+        this.equipment = equipment;
+    }
+
     public int levelUp(){
         int level = super.getLevel();
         if(this.exp >= level*10){
@@ -65,6 +78,10 @@ public class Player extends Character implements DealsDamage{
         }
         this.levelUp();
         return 0;
+    }
+    
+    public void setOnePiece(int piece, int position){
+        this.equipment[piece] = position;
     }
     
 }
