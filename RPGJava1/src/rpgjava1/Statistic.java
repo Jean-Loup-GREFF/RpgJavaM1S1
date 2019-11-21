@@ -114,4 +114,27 @@ public class Statistic {
         this.wisdom+=stats.getWisdom();
         return this;
     }
+    
+    public void InitFromSaveStat(String[] save){
+        this.strenght = Integer.parseInt(save[0]);
+        this.vitality = Integer.parseInt(save[1]);
+        this.dexterity = Integer.parseInt(save[2]);
+        this.agility = Integer.parseInt(save[3]);
+        this.intelligence = Integer.parseInt(save[4]);
+        this.wisdom = Integer.parseInt(save[5]);
+        this.luck = Integer.parseInt(save[6]);
+        
+    }
+    
+    public String getSaveTextStat (){
+        String save = "";
+        save += this.strenght + "/" + this.vitality + "/" + this.dexterity + "/"
+                + this.agility + "/" + this.intelligence + "/" + this.wisdom
+                + "/" + this.luck + "/";
+        return save;
+    
+   
+    
+    
+    }
 }

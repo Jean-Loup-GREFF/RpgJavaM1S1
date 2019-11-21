@@ -14,11 +14,7 @@ public class Character extends AppOnMap implements DealsDamage{
     private int level;
     private int health;
     private int healthM;
-    private int strenght;
-    private int vitality;
-    private int dextirity;
-    private int agility;
-    private int intelligence;
+    private Statistic stats;
     private Inventory inventory;
     private boolean isAlive;
 
@@ -28,26 +24,18 @@ public class Character extends AppOnMap implements DealsDamage{
         this.level = 1;
         this.health = 10;
         this.healthM = 10;
-        this.strenght = 2;
-        this.vitality = 1;
-        this.dextirity = 1;
-        this.agility = 1;
-        this.intelligence = 1;
+        this.stats = new Statistic();
         this.inventory = new Inventory();
         this.isAlive = true;
     }
     
-    public Character(String name, int level, int health, int healthM, int strenght, int vitality, int dextirity, int agility, int intelligence, Inventory inventory, boolean isAlive, char display) {
+    public Character(String name, int level, int health, int healthM, Statistic stats, Inventory inventory, boolean isAlive, char display) {
         super(display);
         this.name = name;
         this.level = level;
         this.health = health;
         this.healthM = healthM;
-        this.strenght = strenght;
-        this.vitality = vitality;
-        this.dextirity = dextirity;
-        this.agility = agility;
-        this.intelligence = intelligence;
+        this.stats = stats;
         this.inventory = inventory;
         this.isAlive = isAlive;
     }
@@ -84,44 +72,12 @@ public class Character extends AppOnMap implements DealsDamage{
         this.healthM = healthM;
     }
 
-    public int getStrenght() {
-        return strenght;
+    public Statistic getStats() {
+        return stats;
     }
 
-    public void setStrenght(int strenght) {
-        this.strenght = strenght;
-    }
-
-    public int getVitality() {
-        return vitality;
-    }
-
-    public void setVitality(int vitality) {
-        this.vitality = vitality;
-    }
-
-    public int getDextirity() {
-        return dextirity;
-    }
-
-    public void setDextirity(int dextirity) {
-        this.dextirity = dextirity;
-    }
-
-    public int getAgility() {
-        return agility;
-    }
-
-    public void setAgility(int agility) {
-        this.agility = agility;
-    }
-
-    public int getIntelligence() {
-        return intelligence;
-    }
-
-    public void setIntelligence(int intelligence) {
-        this.intelligence = intelligence;
+    public void setStats(Statistic stats) {
+        this.stats = stats;
     }
 
     public Inventory getInventory() {
@@ -140,13 +96,38 @@ public class Character extends AppOnMap implements DealsDamage{
         this.isAlive = isAlive;
     }
     
+    public void attack(Character target){
+        target.defence(DealsDamage.attack(stats.getStrenght()));
+    }
+    
     public void defence(int damage){
         this.health -= damage;
-        this.isAlive = this.health <= 0;
+        this.isAlive = this.health > 0;
     }
     
     public void speak(){
         System.out.println(this.name+":blabla");
     }
     
+    public String getSaveText(){
+        
+        String Save = "";
+        Save = Save + this.name + ",";
+        Save += this.level + ",";
+        Save += this.health + ",";
+        Save += this.healthM + ",";
+        Save += this.stats.getSaveTextStat() + ",";
+        Save += this.inventory.getSaveTextInv()+ ",";
+        Save += this.isAlive + ",";
+        return Save+super.getDisplay();
+    }
+    public void InitFromSave(String[] save){
+        this.name = save[0];
+        this.level = Integer.parseInt(save[1]);
+        this.health = Integer.parseInt(save[2]);
+        this.healthM = Integer.parseInt(save[3]);
+        this.stats.InitFromSaveStat(save[4].split("/"));
+        this.inventory.InitFromSave(save[5].split("\\"));
+        this.isAlive = Boolean.parseBoolean(save[6]);
+    }
 }

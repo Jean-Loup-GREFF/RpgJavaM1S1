@@ -97,4 +97,40 @@ public class Inventory {
         return 0;
     }
     
+    public void InitFromSave (String [] save){
+        String[] itemQuant;
+        String[] itemsQuant;
+        itemsQuant = save[0].split("^");
+        int i, l = itemsQuant.length;
+        Item tempitem;
+        int tempquant;
+        tempitem = new Item();
+        this.inventory = new ArrayList<>();
+        this.quantity = new ArrayList<>();
+        this.gold = Integer.parseInt(save[1]);
+        for (i = 0; i < l; i++){
+            itemQuant = itemsQuant[i].split(":");
+            tempitem.InitFromSaveIt(itemQuant[0].split("%"));
+            this.inventory.add(tempitem);
+            this.quantity.add(Integer.parseInt(itemQuant[1]));
+        }
+    }
+    
+    public String getSaveTextInv(){
+        
+        int i;
+        int l;
+        String save = "";
+        l = this.inventory.size();
+        for (i = 0; i < l; i++){
+            save += this.inventory.get(i).getSaveTextIt() + ":" 
+                    + this.quantity.get(i);
+            if (i < l-1 ){
+                save += "^";
+            }
+        }
+        save += "\\";
+        return save += this.gold;
+    }
+    
 }

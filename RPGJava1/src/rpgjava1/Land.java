@@ -219,18 +219,18 @@ public class Land {
     }
     
     public ArrayList<ArrayList<AppOnMap>> getmap (){
-        ArrayList<ArrayList<AppOnMap>> Save;
-        Save = new ArrayList<>();
+        ArrayList<ArrayList<AppOnMap>> save;
+        save = new ArrayList<>();
         for (ArrayList<Integer> i : this.map){
             ArrayList<AppOnMap> line; 
             line = new ArrayList<>();
             for (Integer j : i){
                 line.add(this.elemMap.get(j));   
             }
-            Save.add(line);
+            save.add(line);
         
     }
-        return Save;     
+        return save;     
              
     }
     
@@ -252,6 +252,7 @@ public class Land {
         map = new ArrayList<>();
         linemap = new ArrayList<>();
         elem = new AppOnMap();
+        Character cha = new Character("");
         
         while ((line = buff.readLine())!=null){
             
@@ -264,13 +265,21 @@ public class Land {
                     lenObjectLine = objects.length;
                     for (i = 0; i < lenObjectLine; i++){
                         type = objects[i].split(",");
-                        elem.InitFromSave(type);
+                        j = type.length;
+                        switch(j){
+                            case 1:
+                                elem.InitFromSave(type[0]);
+                                break;
+                            case 8:
+                                cha.InitFromSave(type);
+                            
+                        }
                         linemap.add(elem);
                     }
                     map.add(linemap);
                 }
         }
-        InitMap(map);
+        this.InitMap(map);
         buff.close(); 
         }		
         catch (Exception e){
@@ -285,9 +294,9 @@ public class Land {
         File dir = new File(dirName);
         boolean isCreated = dir.mkdirs();
         ff = new File("C:\\Game\\ANewDawn\\Save\\"+name+"\\"+ this.name +".txt");
-        ArrayList<ArrayList<AppOnMap>> Save;
-        Save = new ArrayList<>();
-        Save = getmap();
+        ArrayList<ArrayList<AppOnMap>> save;
+        save = new ArrayList<>();
+        save = this.getmap();
         int test = 1;
         int limitLine = 0;
         
@@ -296,11 +305,12 @@ public class Land {
         ff.createNewFile();
         FileWriter ffw = new FileWriter(ff);
         
-        for (ArrayList<AppOnMap> y : Save){
+        for (ArrayList<AppOnMap> y : save){
             String SaveLine = "";
             ArrayList<Integer> line; 
             line = new ArrayList<>();
             limitLine = y.size();
+            test = 1;
             for (AppOnMap x : y){
                 SaveLine += x.getSaveText();
                 if (!(test == limitLine)){
