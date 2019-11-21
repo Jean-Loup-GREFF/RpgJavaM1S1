@@ -18,16 +18,18 @@ public class RPGJava1 {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Player p = new Player(0,0,new ClasslessClass(),"M",1,10,10,new Statistic(),new Inventory(),true,'@');
+        //Player p = new Player(0,0,new ClasslessClass(),"M",1,10,10,new Statistic(),new Inventory(),true,'@');
         Character c = new Character("Monster",1,5,5,new Statistic(),new Inventory(),true,'A');
         Game game;
         game = new Game();
         Wall wall = new Wall();
-        game.addElemMap(wall, 90, 0);
-        game.addElemMap(wall, 0, 90);
+        game.addElemMap(wall, 20, 0);
+        game.addElemMap(wall, 0, 20);
+        game.addElemMap(c, 5, 5);
         game.displayMap();
         game.initNewProfile("j'enaimarre");
         game.writeSave();
+        game.clrscr();
         game.initCurrentProfileFromSave("j'enaimarre");
         game.displayMap();
     }

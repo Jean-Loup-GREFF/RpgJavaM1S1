@@ -5,6 +5,9 @@
  */
 package rpgjava1;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  *
  * @author Matthieu
@@ -127,7 +130,17 @@ public class Character extends AppOnMap implements DealsDamage{
         this.health = Integer.parseInt(save[2]);
         this.healthM = Integer.parseInt(save[3]);
         this.stats.InitFromSaveStat(save[4].split("/"));
-        this.inventory.InitFromSave(save[5].split("\\"));
+        
+        //int len = save[5].split("$").length;
+        //if (len == 1){
+        //    this.inventory.InitInventory(Integer.parseInt(""+save[5].charAt(1)));
+        //}
+        //else{
+        this.inventory.InitFromSave(save[5].split("$"));
+        //}
+        
         this.isAlive = Boolean.parseBoolean(save[6]);
+        super.InitFromSave(save[7]);
+        
     }
 }
