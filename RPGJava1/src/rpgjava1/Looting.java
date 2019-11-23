@@ -10,10 +10,10 @@ package rpgjava1;
  * @author Matthieu
  */
 public interface Looting {
-    static void commerce(Character dealer, Inventory trade, Character getter){
-        getter.getInventory().setGold(getter.getInventory().getGold()-trade.getGold());
-        dealer.getInventory().setGold(dealer.getInventory().getGold() + trade.getGold());
-        loopRemoveItems(trade,getter.getInventory());
+    static void commerce(Inventory dealer, Inventory trade, Inventory getter){
+        getter.setGold(getter.getGold()-trade.getGold());
+        dealer.setGold(dealer.getGold() + trade.getGold());
+        loopRemoveItems(trade,getter);
     }
     static void loot(Inventory dealer,Character getter){
         getter.getInventory().setGold(dealer.getGold()+getter.getInventory().getGold());
