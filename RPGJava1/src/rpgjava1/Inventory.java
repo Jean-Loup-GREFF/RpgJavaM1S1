@@ -66,7 +66,8 @@ public class Inventory {
         System.out.println(this.gold);
     }
     
-    public int remove(int index, int number){
+    public int remove(Item item, int number){
+        int index = this.inventory.indexOf(item);
         if(0 < this.inventory.size() || this.inventory.size() < index){
             System.out.println("You give a wrong index");
             return 1;
@@ -79,6 +80,7 @@ public class Inventory {
             System.out.println("You don't have enough " + this.inventory.get(index));
             return 1;
         }
+        
        this.quantity.set(index,this.quantity.get(index)-number);
        if(this.quantity.get(index) == 0){
            this.quantity.remove(index);

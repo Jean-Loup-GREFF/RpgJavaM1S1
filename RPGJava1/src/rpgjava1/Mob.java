@@ -9,6 +9,28 @@ package rpgjava1;
  *
  * @author Matthieu
  */
-public class Mob {
+public class Mob extends Character implements Looting{
+    private int exp;
+    public Mob(){
+        super("Mob");
+        this.exp = 1;
+    }
+    public Mob(String name, int level, int health, int healthM, 
+          Statistic stats, Inventory inventory, boolean isAlive, char display, int exp){
+        super(name,level,health,healthM,stats,inventory,isAlive,display);
+        this.exp = exp;
+    }
+    public void defeat(Player winner){
+        winner.setExp(winner.getExp() + this.exp);
+        Looting.loot(super.getInventory(), winner);
+    }
+
+    public int getExp() {
+        return exp;
+    }
+
+    public void setExp(int exp) {
+        this.exp = exp;
+    }
     
 }
