@@ -25,6 +25,12 @@ public class Inventory {
         this.quantity = quantity;
         this.gold = gold;
     }
+    
+    public void InitInventory (int golf){
+        this.inventory = new ArrayList<>();
+        this.quantity = new ArrayList<>();
+        this.gold = golf;
+    }
 
     public ArrayList<Item> getInventory() {
         return inventory;
@@ -98,21 +104,26 @@ public class Inventory {
     }
     
     public void InitFromSave (String [] save){
-        String[] itemQuant;
-        String[] itemsQuant;
-        itemsQuant = save[0].split("^");
-        int i, l = itemsQuant.length;
-        Item tempitem;
-        int tempquant;
-        tempitem = new Item();
-        this.inventory = new ArrayList<>();
-        this.quantity = new ArrayList<>();
-        this.gold = Integer.parseInt(save[1]);
-        for (i = 0; i < l; i++){
-            itemQuant = itemsQuant[i].split(":");
-            tempitem.InitFromSaveIt(itemQuant[0].split("%"));
-            this.inventory.add(tempitem);
-            this.quantity.add(Integer.parseInt(itemQuant[1]));
+        if (save.length == 1){
+            this.InitInventory(Integer.parseInt(save[0]));
+        }
+        else{
+            String[] itemQuant;
+            String[] itemsQuant;
+            itemsQuant = save[0].split("^");
+            int i, l = itemsQuant.length;
+            Item tempitem;
+            int tempquant;
+            tempitem = new Item();
+            this.inventory = new ArrayList<>();
+            this.quantity = new ArrayList<>();
+            this.gold = Integer.parseInt(save[1]);
+            for (i = 0; i < l; i++){
+                itemQuant = itemsQuant[i].split(":");
+                tempitem.InitFromSaveIt(itemQuant[0].split("%"));
+                this.inventory.add(tempitem);
+                this.quantity.add(Integer.parseInt(itemQuant[1]));
+            }
         }
     }
     
@@ -129,7 +140,9 @@ public class Inventory {
                 save += "^";
             }
         }
-        save += "\\";
+        if (this.inventory.size() > 0){
+            save += "$";
+        }
         return save += this.gold;
     }
     

@@ -14,7 +14,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class Land {
     private String name;
@@ -22,9 +24,9 @@ public class Land {
     private ArrayList<ArrayList<Integer>> map;
 
     public Land() {
-        this.name = "";
-        this.elemMap = new ArrayList();
-        this.map = new ArrayList();
+        this.name = "1";
+        this.elemMap = new ArrayList<>();
+        this.map = new ArrayList<>();
     }
    
     public Land(String name, ArrayList<AppOnMap> elemMap, ArrayList<ArrayList<Integer>> map) {
@@ -92,14 +94,14 @@ public class Land {
         return player;
     }
     
-    public void InitMap(ArrayList<ArrayList<AppOnMap>> Save){
+    public void InitMap(ArrayList<ArrayList<AppOnMap>> Save, String name){
         
         // Save is an array list with first element name of the map
         // and then the other element is an array of array of all
         // the object in the map
         this.map = new ArrayList<>();
         this.elemMap = new ArrayList<>();
-        this.name = " ";
+        this.name = name;
         Integer pos = 0;
         for (ArrayList<AppOnMap> i : Save){
             ArrayList<Integer> line; 
@@ -158,10 +160,11 @@ public class Land {
                 }
                 else{
                     this.map.get(y).set(x,this.elemMap.indexOf(news));
+                    this.displayMap();
                 }
     }
     
-    public int moveTo (Integer x, Integer y, Integer Bouton){
+    public int moveTo (Integer x, Integer y, Integer buton){
         
         VoidCase voids = new VoidCase();
         int test = 1;
@@ -169,10 +172,10 @@ public class Land {
         
         
         
-        switch(Bouton){
+        switch(buton){
             case (0):
-                if (this.elemMap.get(this.map.get(y-1).get(x)) == voids){
-                    temp = this.elemMap.get(this.map.get(y-1).get(x));
+                if (this.elemMap.get(this.map.get(y-1).get(x)).getDisplay() == voids.getDisplay()){
+                    temp = this.elemMap.get(this.map.get(y).get(x));
                     changeElem (x, y, voids);
                     changeElem (x, y-1, temp);
                 }
@@ -181,8 +184,8 @@ public class Land {
                 }
                 break;
             case(1):
-                if (this.elemMap.get(this.map.get(y).get(x-1)) == voids){
-                    temp = this.elemMap.get(this.map.get(y).get(x-1));
+                if (this.elemMap.get(this.map.get(y).get(x-1)).getDisplay() == voids.getDisplay()){
+                    temp = this.elemMap.get(this.map.get(y).get(x));
                     changeElem (x, y, voids);
                     changeElem (x-1, y, temp);
                 }
@@ -191,8 +194,8 @@ public class Land {
                 }
                 break;
             case(2):
-                if (this.elemMap.get(this.map.get(y+1).get(x)) == voids){
-                    temp = this.elemMap.get(this.map.get(y+1).get(x));
+                if (this.elemMap.get(this.map.get(y+1).get(x)).getDisplay() == voids.getDisplay()){
+                    temp = this.elemMap.get(this.map.get(y).get(x));
                     changeElem (x, y, voids);
                     changeElem (x, y+1, temp);
                 }
@@ -201,8 +204,8 @@ public class Land {
                 }
                 break;
             case(3):
-                if (this.elemMap.get(this.map.get(y).get(x+1)) == voids){
-                    temp = this.elemMap.get(this.map.get(y).get(x+1));
+                if (this.elemMap.get(this.map.get(y).get(x+1)).getDisplay() == voids.getDisplay()){
+                    temp = this.elemMap.get(this.map.get(y).get(x));
                     changeElem (x, y, voids);
                     changeElem (x+1, y, temp);
                 }
@@ -213,8 +216,7 @@ public class Land {
             
             
         }
-                
-        
+        boolean a = (this.elemMap.get(this.map.get(y-1).get(x)) == voids);        
         return test;
     }
     
@@ -236,6 +238,8 @@ public class Land {
     
     public void initMapFromSave(String nameProf, String namemap){
         this.name = namemap;
+        this.map = new ArrayList<>();
+        this.elemMap = new ArrayList<>();
         try{
         InputStream flux=new FileInputStream("C:\\Game\\ANewDawn\\Save\\"+nameProf+"\\"+ this.name +".txt"); 
         InputStreamReader lecture=new InputStreamReader(flux);
@@ -243,8 +247,8 @@ public class Land {
         String line;
         String[] objects;
         String[] type;
-        ArrayList<ArrayList<AppOnMap>> map;
-        ArrayList<AppOnMap> linemap;
+        ArrayList<ArrayList<Integer>> map;
+        ArrayList<Integer> linemap;
         AppOnMap elem;
         int testNamemap = 0;
         int lenObjectLine;
@@ -253,40 +257,82 @@ public class Land {
         linemap = new ArrayList<>();
         elem = new AppOnMap();
         Character cha = new Character("");
+        int n = 0;
         
         while ((line = buff.readLine())!=null){
-            
-                if (testNamemap == 0){
-                    testNamemap = 1;
-                }
+          
+                objects = line.split(";");
+                lenObjectLine = objects.length;
+                linemap = new ArrayList<>();
                 
-                else{
-                    objects = line.split(";");
-                    lenObjectLine = objects.length;
-                    for (i = 0; i < lenObjectLine; i++){
-                        type = objects[i].split(",");
-                        j = type.length;
-                        switch(j){
-                            case 1:
-                                elem.InitFromSave(type[0]);
-                                break;
-                            case 8:
-                                cha.InitFromSave(type);
+                for (i = 0; i < lenObjectLine; i++){
+                    elem = new AppOnMap();
+                    type = objects[i].split(",");
+                    j = type.length;
+                    switch(j){
+                        case 1:
+                            elem.InitFromSave(type[0]);//
+                            if (! isElem(elem)){
+                                n = this.elemMap.size();
+                                this.elemMap.add(elem);
+                            }
+                            else{
+                                n = this.posElem(elem);
+                            }
+                            break;
                             
-                        }
-                        linemap.add(elem);
+                        case 8:
+                            cha.InitFromSave(type);
+                            if (! isElem(cha)){
+                                
+                                n = this.elemMap.size();
+                                this.elemMap.add(cha);
+                                
+                            }
+                            else{
+                                n = this.posElem(cha);
+                            }
+                            break;
+                        
                     }
-                    map.add(linemap);
-                }
+                    linemap.add(n);
+                    //linemap.add(elem);
+                    }
+                    
+                    this.map.add(linemap);
+                
         }
-        this.InitMap(map);
+        //this.InitMap(map,namemap);
+       
         buff.close(); 
         }		
         catch (Exception e){
         System.out.println("Your save have been corrupted");
         }
     }
-        
+    
+    public int posElem (AppOnMap Elem){
+        int n = 0;
+        for(AppOnMap j: this.elemMap){
+            if (Elem == j){
+                break;
+            }
+            n++;
+        }
+        return n;
+    }
+    
+    public boolean isElem (AppOnMap Elem){
+        boolean test = false;
+        for(AppOnMap j: this.elemMap){
+            if (Elem == j){
+                test = true;
+                break;
+            }
+        }
+        return test;
+    }
+    
     public void saveMap(String name){
         try{
         File ff; // définir l'arborescence
@@ -326,7 +372,7 @@ public class Land {
         
         ffw.close(); // fermer le fichier à la fin des traitements
         } 
-        catch (Exception e) {System.out.println("t'es une merde");}
+        catch (Exception e) {}
     
 }
     
@@ -426,11 +472,12 @@ public class Land {
             if (x<lenLine){
                 changeElem(x,y,Elem);
             }
+            
             else{
-                int nX = this.map.get(y).size() - 1;
+                int nX = this.map.get(y).size() ;
                 ArrayList<Integer> line;
                 line = new ArrayList<>();
-                line = map.get(y);
+                line = this.map.get(y);
                 int pos = -1;
                 if (pos < 0){
                     pos = elemMap.size();
@@ -440,11 +487,14 @@ public class Land {
                     nX++;
                     line.add(pos);
                 }
+                this.map.set(y, line);
+                
             }
         }
         else{
-            int nY = 0;
+            int nY = 1;
             int nX = 1;
+            
             boolean test = elemHere(Elem);
             int pos = -1;
             if(test){
@@ -456,11 +506,14 @@ public class Land {
                     pos = elemMap.size();
                     elemMap.add(Elem);
                 }
-            line.add(pos);
-            while (nY<y){
+            
+            while (nY<y-1){
+                    line = new ArrayList<>();
+                    line.add(pos);
                     nY++;
                     map.add(line);
                 }
+            line = new ArrayList<>();
             while (nX<x){
                 nX++;
                 line.add(pos);

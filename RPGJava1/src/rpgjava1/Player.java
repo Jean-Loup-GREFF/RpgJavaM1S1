@@ -27,7 +27,9 @@ public class Player extends Character implements DealsDamage{
         this.equipment = tmp;
     }
     
-    public Player(int exp, int expM, ClassArchetype archetype, String name, int level, int health, int healthM, Statistic stats, Inventory inventory, boolean isAlive, char display, int[] equipment) {
+    public Player(int exp, int expM, ClassArchetype archetype, String name, 
+       int level, int health, int healthM, Statistic stats, Inventory inventory,
+       boolean isAlive, char display, int[] equipment) {
         super(name, level, health, healthM, stats, inventory, isAlive, display);
         this.exp = exp;
         this.expM = expM;
