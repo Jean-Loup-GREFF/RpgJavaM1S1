@@ -83,15 +83,28 @@ public class Land {
         return elemMap.get(map.get(y).get(x));
     }
     
-    public AppOnMap getPlayer (){
-        AppOnMap player;
-        player = new AppOnMap();
-        for (AppOnMap i : elemMap)
-            if ("Player" == i.getClass().getSimpleName()){
-                player = i;
+    public int[] getPlayer (){
+        
+        Player p = new Player("");
+        int n = 0, cx = 0 , cy = 0, x = -1, y = -1;
+        for (int i= 0; i<this.elemMap.size(); i++){
+            if (this.elemMap.get(i).getDisplay() == p.getDisplay()){
                 break;
             }
-        return player;
+            n++;
+        }
+        for (ArrayList<Integer> Y : this.map){
+            for (int X : Y){
+                if (X == n){
+                    x = cx;
+                    y = cy;
+                }
+                cx ++;
+            }
+            cy ++;
+        }
+        int[] coord = {x,y};
+        return coord;
     }
     
     public void InitMap(ArrayList<ArrayList<AppOnMap>> Save, String name){
@@ -160,7 +173,6 @@ public class Land {
                 }
                 else{
                     this.map.get(y).set(x,this.elemMap.indexOf(news));
-                    this.displayMap();
                 }
     }
     
@@ -234,6 +246,94 @@ public class Land {
     }
         return save;     
              
+    }
+    
+    public String initFirstMapFromSave(String name){
+        this.map = new ArrayList<>();
+        this.elemMap = new ArrayList<>();
+        try{
+        InputStream flux=new FileInputStream("maps\\Twilight'sCastle.txt"); 
+        this.name = "Twilight'sCastle";
+        InputStreamReader lecture=new InputStreamReader(flux);
+        BufferedReader buff=new BufferedReader(lecture);
+        String line;
+        String[] objects;
+        String[] type;
+        ArrayList<ArrayList<Integer>> map;
+        ArrayList<Integer> linemap;
+        AppOnMap elem;
+        int testNamemap = 0;
+        int lenObjectLine;
+        int i, j;
+        map = new ArrayList<>();
+        linemap = new ArrayList<>();
+        elem = new AppOnMap();
+        Character cha = new Character("");
+        Player play = new Player(""); 
+        int n = 0;
+        
+        while ((line = buff.readLine())!=null){
+          
+                objects = line.split(";");
+                lenObjectLine = objects.length;
+                linemap = new ArrayList<>();
+                
+                for (i = 0; i < lenObjectLine; i++){
+                    elem = new AppOnMap();
+                    type = objects[i].split(",");
+                    j = type.length;
+                    switch(j){
+                        case 1:
+                            elem.InitFromSave(type[0]);//
+                            if (! isElem(elem)){
+                                n = this.elemMap.size();
+                                this.elemMap.add(elem);
+                            }
+                            else{
+                                n = this.posElem(elem);
+                            }
+                            break;
+                            
+                        case 8:
+                            cha.InitFromSave(type);
+                            if (! isElem(cha)){
+                                
+                                n = this.elemMap.size();
+                                this.elemMap.add(cha);
+                                
+                            }
+                            else{
+                                n = this.posElem(cha);
+                            }
+                            break;
+                        case 12:
+                            play.InitFromSave(type);
+                            if (! isElem(play)){
+                                
+                                n = this.elemMap.size();
+                                this.elemMap.add(play);
+                                
+                            }
+                            else{
+                                n = this.posElem(play);
+                            }
+                        
+                    }
+                    linemap.add(n);
+                    //linemap.add(elem);
+                    }
+                    
+                    this.map.add(linemap);
+                
+        }
+        //this.InitMap(map,namemap);
+       
+        buff.close(); 
+        }		
+        catch (Exception e){
+        System.out.println("Your save have been corrupted");
+        }
+        return this.name;
     }
     
     public void initMapFromSave(String nameProf, String namemap){

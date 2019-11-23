@@ -33,4 +33,17 @@ public class Mob extends Character implements Looting{
         this.exp = exp;
     }
     
+    public String getSaveText(){
+        
+        String save = "";
+        save = super.getSaveText();
+        save += this.exp;
+        
+        return save;
+    }
+    public void InitFromSave(String[] save){
+        super.InitFromSave(save[0]);
+        this.exp = Integer.parseInt(save[1]);
+        
+    }
 }

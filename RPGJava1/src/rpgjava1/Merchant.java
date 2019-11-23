@@ -12,10 +12,12 @@ package rpgjava1;
 public class Merchant extends Character implements Looting{
     private double tariffSell;
     private double tariffBuy;
+    
     public Merchant(){
         super("Merchant");
         this.tariffBuy = 0.1;
         this.tariffSell = 1.2;
+        super.setStats(new Statistic(999,999,1,1,1,1,100));
     }
     public Merchant(String name, int level, int health, int healthM, 
           Statistic stats, Inventory inventory, boolean isAlive, char display,
@@ -48,4 +50,19 @@ public class Merchant extends Character implements Looting{
         this.tariffBuy = tariffBuy;
     }
     
+    public String getSaveText(){
+        
+        String save = "";
+        save = super.getSaveText();
+        save += this.tariffBuy;
+        save += this.tariffSell;
+        
+        return save;
+    }
+    public void InitFromSave(String[] save){
+        super.InitFromSave(save[0]);
+        this.tariffBuy = Double.parseDouble(save[1]);
+        this.tariffSell = Double.parseDouble(save[2]);
+        
+    }
 }

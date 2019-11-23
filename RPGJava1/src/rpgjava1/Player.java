@@ -158,7 +158,18 @@ public class Player extends Character implements DealsDamage{
         save += ",";
         save += this.exp + ",";
         save += this.expM + ",";
-        save += this.archetype;
+        if (this.archetype.getText() == "warrior"){
+            save += "warrior,";
+        }
+        else if (this.archetype.getText() == "wizard"){
+            save += "wizard";
+        }
+        else if (this.archetype.getText() == "thief"){
+            save += "thief,";
+        }
+        else if (this.archetype.getText() == "classless"){
+            save += "classless,";
+        }
         for (int i = 0; i < this.equipment.length; i++){
             save += this.equipment[0];
             if (i < this.equipment.length - 1){

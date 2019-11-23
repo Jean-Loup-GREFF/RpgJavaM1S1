@@ -19,7 +19,7 @@ public class RPGJava1 {
     public static void main(String[] args) {
         // TODO code application logic here
         int[] tmp ={-1,-1,-1,-1,-1,-1,-1};
-        Player p = new Player(0,0,new ClasslessClass(),"*",1,10,10,new Statistic(),new Inventory(),true,'@',tmp);
+        Player p = new Player(0,0,new ClasslessClass(),"Them",1,10,10,new Statistic(),new Inventory(),true,'@',tmp);
         Character c = new Character("Monster",1,5,5,new Statistic(),new Inventory(),true,'A');
         Game game,game2;
         
@@ -27,11 +27,9 @@ public class RPGJava1 {
         game2 = new Game();
         Wall wall = new Wall();
         VoidCase voidc = new VoidCase();
-        game.initNewProfile("j'enaimarre1");
-        game.changeElem(18,8,p);
+        game.initNewProfile("Them",p);
         game.displayMap();
         game.writeSave();
-        game.moveOnMap(p,18,8);
         game.displayMap();
         
     }

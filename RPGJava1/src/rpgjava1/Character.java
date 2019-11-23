@@ -110,15 +110,15 @@ public class Character extends AppOnMap implements DealsDamage{
     
     public String getSaveText(){
         
-        String Save = "";
-        Save = Save + this.name + ",";
-        Save += this.level + ",";
-        Save += this.health + ",";
-        Save += this.healthM + ",";
-        Save += this.stats.getSaveTextStat() + ",";
-        Save += this.inventory.getSaveTextInv()+ ",";
-        Save += this.isAlive + ",";
-        return Save+super.getDisplay();
+        String save = "";
+        save = save + this.name + ",";
+        save += this.level + ",";
+        save += this.health + ",";
+        save += this.healthM + ",";
+        save += this.stats.getSaveTextStat() + ",";
+        save += this.inventory.getSaveTextInv()+ ",";
+        save += this.isAlive + ",";
+        return save+super.getDisplay();
     }
     public void InitFromSave(String[] save){
         this.name = save[0];

@@ -33,5 +33,16 @@ public class Chest extends AppOnMap implements Looting{
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
     }
-    
+    public String getSaveText(){
+        
+        String save = "";
+        save += this.inventory.getSaveTextInv()+ ",";
+        return save+super.getDisplay();
+    }
+    public void InitFromSave(String[] save){
+        
+        this.inventory.InitFromSave(save[0].split("$"));
+        super.InitFromSave(save[1]);
+        
+    }
 }
