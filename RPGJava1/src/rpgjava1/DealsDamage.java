@@ -10,7 +10,9 @@ package rpgjava1;
  * @author Matthieu
  */
 public interface DealsDamage {
-    static int attack(int str){
-        return str;
+    static void dealsDamage(int damageDealt, Character target){
+        int damage = damageDealt - target.getStats().getVitality();
+        target.setHealth(target.getHealth()-damage);
+        target.setIsAlive(target.getHealth()>0);
     }
 }
