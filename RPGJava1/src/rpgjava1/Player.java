@@ -5,7 +5,7 @@
  */
 package rpgjava1;
 
-import java.util.Set;
+import java.util.Scanner;
 
 /**
  *
@@ -84,4 +84,70 @@ public class Player extends Character implements DealsDamage{
         this.equipment[piece] = position;
     }
     
+    @Override
+    @SuppressWarnings("empty-statement")
+    public void attack(Character target){
+        Scanner keyboard = new Scanner(System.in);
+        String choice = "";
+        boolean use = false;
+        //System.out.println("Press A");
+        /*while(!use){
+            /*if(KeyPressing.isAPress()){
+                System.out.println("ça marche !!!!");
+                use = true;
+            } 
+        }*/
+        do{
+            choice = "";
+            choice = keyboard.nextLine();
+            Skill skill = new Skill("");
+            int damage = 0;
+            if(choice.length() == 0){
+                System.out.println("Please enter a letter");
+                continue;
+            }
+            switch(choice.toUpperCase().charAt(0)){
+                case 'A':
+                    skill = this.archetype.getSkills().get(0);
+                    System.out.println(skill.getName() + "!");
+                    damage = skill.calcDamage(this.getStats());
+                    DealsDamage.dealsDamage(damage, target);
+                    System.out.println(super.getName() + " inflicts " + damage);
+                    use = true;
+                    break;
+                case 'Z':
+                    skill = this.archetype.getSkills().get(1);
+                    System.out.println(skill.getName() + "!");
+                    damage = skill.calcDamage(this.getStats());
+                    DealsDamage.dealsDamage(damage, target);
+                    System.out.println(super.getName() + " inflicts " + damage);
+                    use = true;
+                    break;
+                case 'E':
+                    skill = this.archetype.getSkills().get(2);
+                    System.out.println(skill.getName() + "!");
+                    damage = skill.calcDamage(this.getStats());
+                    DealsDamage.dealsDamage(damage, target);
+                    System.out.println(super.getName() + " inflicts " + damage);
+                    use = true;
+                    break;
+                case 'R':
+                    skill = this.archetype.getSkills().get(3);
+                    System.out.println(skill.getName() + "!");
+                    damage = skill.calcDamage(this.getStats());
+                    DealsDamage.dealsDamage(damage, target);
+                    System.out.println(super.getName() + " inflicts " + damage);
+                    use = true;
+                    break;
+                case 'T':
+                    skill = this.archetype.getSkills().get(4);
+                    System.out.println(skill.getName() + "!");
+                    damage = skill.calcDamage(this.getStats());
+                    DealsDamage.dealsDamage(damage, target);
+                    System.out.println(super.getName() + " inflicts " + damage);
+                    use = true;
+                    break;
+            }
+    }while(!use);
+}
 }
