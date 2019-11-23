@@ -26,4 +26,8 @@ public class WarriorClass extends ClassArchetype {
         skills.add(new Skill("War Cry",new Statistic(1,2,0,0,0,2,0),10,0,5,0));
         return skills;
     }
+    
+    public String getText(){
+        return "warrior";
+    }
 }

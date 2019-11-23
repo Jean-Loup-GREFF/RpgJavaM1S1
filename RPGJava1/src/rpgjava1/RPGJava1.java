@@ -28,8 +28,10 @@ public class RPGJava1 {
         Wall wall = new Wall();
         VoidCase voidc = new VoidCase();
         game.initNewProfile("j'enaimarre1");
+        game.changeElem(18,8,p);
         game.displayMap();
-        game.moveOnMap(c,17,9);
+        game.writeSave();
+        game.moveOnMap(p,18,8);
         game.displayMap();
         
     }

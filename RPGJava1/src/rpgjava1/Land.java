@@ -257,6 +257,7 @@ public class Land {
         linemap = new ArrayList<>();
         elem = new AppOnMap();
         Character cha = new Character("");
+        Player play = new Player(""); 
         int n = 0;
         
         while ((line = buff.readLine())!=null){
@@ -293,6 +294,17 @@ public class Land {
                                 n = this.posElem(cha);
                             }
                             break;
+                        case 12:
+                            play.InitFromSave(type);
+                            if (! isElem(play)){
+                                
+                                n = this.elemMap.size();
+                                this.elemMap.add(play);
+                                
+                            }
+                            else{
+                                n = this.posElem(play);
+                            }
                         
                     }
                     linemap.add(n);

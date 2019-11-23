@@ -152,4 +152,48 @@ public class Player extends Character implements DealsDamage{
             }
     }while(!use);
 }
+    public String getSaveText(){
+        String save;
+        save = super.getSaveText();
+        save += ",";
+        save += this.exp + ",";
+        save += this.expM + ",";
+        save += this.archetype;
+        for (int i = 0; i < this.equipment.length; i++){
+            save += this.equipment[0];
+            if (i < this.equipment.length - 1){
+                save += ":";
+            }
+        }
+        
+        return save;
+    }
+    
+    @SuppressWarnings("empty-statement")
+    public void InitFromSave(String[] save){
+        String[] save1 = {save[0],save[1],save[2],save[3],save[4],save[5],
+            save[6],save[7]};
+        String[] save2 = {save[8],save[9],save[10],save[11]};
+        String[] equipmentv2 = save[11].split(":");
+        super.InitFromSave(save1);
+        this.exp = Integer.parseInt(save2[0]);
+        this.expM = Integer.parseInt(save2[1]);
+        if (save2[2] == "warrior"){
+            this.archetype = new WarriorClass();
+        }
+        else if (save2[2] == "wizard"){
+            this.archetype = new WizardClass();
+        }
+        else if (save2[2] == "thief"){
+            this.archetype = new ThiefClass();
+        }
+        else if (save2[2] == "classless"){
+            this.archetype = new ClasslessClass();
+        }
+        int[] equi = {Integer.parseInt(equipmentv2[0]),
+            Integer.parseInt(equipmentv2[1]),Integer.parseInt(equipmentv2[2]),
+            Integer.parseInt(equipmentv2[3]),Integer.parseInt(equipmentv2[4]),
+            Integer.parseInt(equipmentv2[5]),Integer.parseInt(equipmentv2[6])};
+        this.equipment = equi;
+    }
 }

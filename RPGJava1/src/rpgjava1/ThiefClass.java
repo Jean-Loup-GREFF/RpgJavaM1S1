@@ -25,4 +25,8 @@ public class ThiefClass extends ClassArchetype{
         skills.add(new Skill("Bloodlust",new Statistic(0,0,2,2,0,2,0),30,0,0,30));
         return skills;
     }
+    
+    public String getText(){
+        return "thief";
+    }
 }

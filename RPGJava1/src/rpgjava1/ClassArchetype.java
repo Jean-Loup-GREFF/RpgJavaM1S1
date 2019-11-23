@@ -56,4 +56,8 @@ public abstract class ClassArchetype implements DealsDamage{
         this.basicAttack = basicAttack;
     }
     
+    public String getText(){
+        return "";
+    }
+    
 }

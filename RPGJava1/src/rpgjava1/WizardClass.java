@@ -26,4 +26,7 @@ public class WizardClass extends ClassArchetype {
         skills.add(new Skill("Gather Storm's",new Statistic(0,0,0,2,2,0,0),30,0,30,0));
         return skills;
     }
+    public String getText(){
+        return "wizard";
+    }
 }

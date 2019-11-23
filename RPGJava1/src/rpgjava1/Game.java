@@ -204,7 +204,6 @@ public static void clrscr(){
             this.profiles.add(test);
             }
         System.out.println(this.currentProfile + " " + this.profiles.get(0)[0] + " " + this.profiles.get(0)[1]);
-        this.currentMap.displayMap();
     }
     
     public int initCurrentProfileFromSave(String name, String name2){
