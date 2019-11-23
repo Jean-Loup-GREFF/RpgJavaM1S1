@@ -101,12 +101,7 @@ public class Character extends AppOnMap implements DealsDamage{
     }
     
     public void attack(Character target){
-        target.defence(DealsDamage.attack(stats.getStrenght()));
-    }
-    
-    public void defence(int damage){
-        this.health -= damage;
-        this.isAlive = this.health > 0;
+        DealsDamage.dealsDamage(stats.getStrenght(),target);
     }
     
     public void speak(){
