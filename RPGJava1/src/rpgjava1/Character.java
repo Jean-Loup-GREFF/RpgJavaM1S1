@@ -32,7 +32,8 @@ public class Character extends AppOnMap implements DealsDamage{
         this.isAlive = true;
     }
     
-    public Character(String name, int level, int health, int healthM, Statistic stats, Inventory inventory, boolean isAlive, char display) {
+    public Character(String name, int level, int health, int healthM, 
+          Statistic stats, Inventory inventory, boolean isAlive, char display) {
         super(display);
         this.name = name;
         this.level = level;

@@ -14,7 +14,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class Land {
     private String name;
@@ -22,7 +24,7 @@ public class Land {
     private ArrayList<ArrayList<Integer>> map;
 
     public Land() {
-        this.name = "";
+        this.name = "1";
         this.elemMap = new ArrayList<>();
         this.map = new ArrayList<>();
     }
@@ -158,10 +160,11 @@ public class Land {
                 }
                 else{
                     this.map.get(y).set(x,this.elemMap.indexOf(news));
+                    this.displayMap();
                 }
     }
     
-    public int moveTo (Integer x, Integer y, Integer Bouton){
+    public int moveTo (Integer x, Integer y, Integer buton){
         
         VoidCase voids = new VoidCase();
         int test = 1;
@@ -169,10 +172,10 @@ public class Land {
         
         
         
-        switch(Bouton){
+        switch(buton){
             case (0):
-                if (this.elemMap.get(this.map.get(y-1).get(x)) == voids){
-                    temp = this.elemMap.get(this.map.get(y-1).get(x));
+                if (this.elemMap.get(this.map.get(y-1).get(x)).getDisplay() == voids.getDisplay()){
+                    temp = this.elemMap.get(this.map.get(y).get(x));
                     changeElem (x, y, voids);
                     changeElem (x, y-1, temp);
                 }
@@ -181,8 +184,8 @@ public class Land {
                 }
                 break;
             case(1):
-                if (this.elemMap.get(this.map.get(y).get(x-1)) == voids){
-                    temp = this.elemMap.get(this.map.get(y).get(x-1));
+                if (this.elemMap.get(this.map.get(y).get(x-1)).getDisplay() == voids.getDisplay()){
+                    temp = this.elemMap.get(this.map.get(y).get(x));
                     changeElem (x, y, voids);
                     changeElem (x-1, y, temp);
                 }
@@ -191,8 +194,8 @@ public class Land {
                 }
                 break;
             case(2):
-                if (this.elemMap.get(this.map.get(y+1).get(x)) == voids){
-                    temp = this.elemMap.get(this.map.get(y+1).get(x));
+                if (this.elemMap.get(this.map.get(y+1).get(x)).getDisplay() == voids.getDisplay()){
+                    temp = this.elemMap.get(this.map.get(y).get(x));
                     changeElem (x, y, voids);
                     changeElem (x, y+1, temp);
                 }
@@ -201,8 +204,8 @@ public class Land {
                 }
                 break;
             case(3):
-                if (this.elemMap.get(this.map.get(y).get(x+1)) == voids){
-                    temp = this.elemMap.get(this.map.get(y).get(x+1));
+                if (this.elemMap.get(this.map.get(y).get(x+1)).getDisplay() == voids.getDisplay()){
+                    temp = this.elemMap.get(this.map.get(y).get(x));
                     changeElem (x, y, voids);
                     changeElem (x+1, y, temp);
                 }
@@ -213,8 +216,7 @@ public class Land {
             
             
         }
-                
-        
+        boolean a = (this.elemMap.get(this.map.get(y-1).get(x)) == voids);        
         return test;
     }
     
@@ -269,7 +271,7 @@ public class Land {
                     j = type.length;
                     switch(j){
                         case 1:
-                            elem.InitFromSave(type[0]);
+                            elem.InitFromSave(type[0]);//
                             if (! isElem(elem)){
                                 n = this.elemMap.size();
                                 this.elemMap.add(elem);
@@ -278,9 +280,11 @@ public class Land {
                                 n = this.posElem(elem);
                             }
                             break;
+                            
                         case 8:
                             cha.InitFromSave(type);
                             if (! isElem(cha)){
+                                
                                 n = this.elemMap.size();
                                 this.elemMap.add(cha);
                                 
@@ -368,7 +372,7 @@ public class Land {
         
         ffw.close(); // fermer le fichier à la fin des traitements
         } 
-        catch (Exception e) {System.out.println("t'es une merde");}
+        catch (Exception e) {}
     
 }
     
@@ -468,11 +472,12 @@ public class Land {
             if (x<lenLine){
                 changeElem(x,y,Elem);
             }
+            
             else{
-                int nX = this.map.get(y).size() - 1;
+                int nX = this.map.get(y).size() ;
                 ArrayList<Integer> line;
                 line = new ArrayList<>();
-                line = map.get(y);
+                line = this.map.get(y);
                 int pos = -1;
                 if (pos < 0){
                     pos = elemMap.size();
@@ -482,11 +487,14 @@ public class Land {
                     nX++;
                     line.add(pos);
                 }
+                this.map.set(y, line);
+                
             }
         }
         else{
             int nY = 1;
             int nX = 1;
+            
             boolean test = elemHere(Elem);
             int pos = -1;
             if(test){
@@ -498,11 +506,14 @@ public class Land {
                     pos = elemMap.size();
                     elemMap.add(Elem);
                 }
-            line.add(pos);
+            
             while (nY<y-1){
+                    line = new ArrayList<>();
+                    line.add(pos);
                     nY++;
                     map.add(line);
                 }
+            line = new ArrayList<>();
             while (nX<x){
                 nX++;
                 line.add(pos);
