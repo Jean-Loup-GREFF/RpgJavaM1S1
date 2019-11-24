@@ -182,7 +182,7 @@ public class Land {
                 }
     }
     
-    public int moveTo (Integer x, Integer y, Integer buton){
+    public int moveTo (Integer x, Integer y, Integer buton, Game game){
         
         VoidCase voids = new VoidCase();
         int test = 1;
@@ -192,43 +192,55 @@ public class Land {
         
         switch(buton){
             case (0):
-                if (this.elemMap.get(this.map.get(y-1).get(x)).getDisplay() == voids.getDisplay()){
+                if (game.getTrapCurrentPosition() == null){
                     temp = this.elemMap.get(this.map.get(y).get(x));
                     changeElem (x, y, voids);
                     changeElem (x, y-1, temp);
                 }
                 else{
-                    test = 0;
+                    temp = this.elemMap.get(this.map.get(y).get(x));
+                    changeElem (x, y, game.getTrapCurrentPosition());
+                    changeElem (x, y-1, temp);
+                    game.setTrapCurrentPosition(null);
                 }
                 break;
             case(1):
-                if (this.elemMap.get(this.map.get(y).get(x-1)).getDisplay() == voids.getDisplay()){
+                if (game.getTrapCurrentPosition() == null){
                     temp = this.elemMap.get(this.map.get(y).get(x));
                     changeElem (x, y, voids);
                     changeElem (x-1, y, temp);
                 }
                 else{
-                    test = 0;
+                    temp = this.elemMap.get(this.map.get(y).get(x));
+                    changeElem (x, y, game.getTrapCurrentPosition());
+                    changeElem (x-1, y, temp);
+                    game.setTrapCurrentPosition(null);
                 }
                 break;
             case(2):
-                if (this.elemMap.get(this.map.get(y+1).get(x)).getDisplay() == voids.getDisplay()){
+                if (game.getTrapCurrentPosition() == null){
                     temp = this.elemMap.get(this.map.get(y).get(x));
                     changeElem (x, y, voids);
                     changeElem (x, y+1, temp);
                 }
                 else{
-                    test = 0;
+                    temp = this.elemMap.get(this.map.get(y).get(x));
+                    changeElem (x, y, game.getTrapCurrentPosition());
+                    changeElem (x, y+1, temp);
+                    game.setTrapCurrentPosition(null);
                 }
                 break;
             case(3):
-                if (this.elemMap.get(this.map.get(y).get(x+1)).getDisplay() == voids.getDisplay()){
+                if (game.getTrapCurrentPosition() == null){
                     temp = this.elemMap.get(this.map.get(y).get(x));
                     changeElem (x, y, voids);
                     changeElem (x+1, y, temp);
                 }
                 else{
-                    test = 0;
+                    temp = this.elemMap.get(this.map.get(y).get(x));
+                    changeElem (x, y, game.getTrapCurrentPosition());
+                    changeElem (x+1, y, temp);
+                    game.setTrapCurrentPosition(null);
                 }
                 break;
             
