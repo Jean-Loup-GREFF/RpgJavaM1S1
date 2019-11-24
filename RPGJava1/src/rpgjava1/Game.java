@@ -60,6 +60,7 @@ public class Game {
         while ((line = buff.readLine())!=null){
             
             this.profiles.add(line.split(" "));
+            System.out.println("" +this.profiles.get(i)[0]+this.profiles.get(i)[1]);
             i++;
         }
         
@@ -565,6 +566,10 @@ public class Game {
     public void setProfiles(int i, String[] nprofile){
         this.profiles.set(i,nprofile);
         
+    }
+    
+    public String[] getProfileUse(){
+        return this.profiles.get(currentProfile);
     }
     
     public void mainMenu(){
