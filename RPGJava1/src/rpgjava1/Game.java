@@ -212,7 +212,6 @@ public class Game {
             }
         else {
             test = 1;
-            System.out.println('A');
         }
         return test;
     }
@@ -246,13 +245,10 @@ public class Game {
                 
                 currentMap.initMapFromSave(name, i[1]);
             try{
-                System.out.println("A"+i[2]);
                 this.trapCurrentPosition = new Trap();
                 this.trapCurrentPosition.InitFromSave(i[2].split(","));
-                System.out.println(this.trapCurrentPosition.getDisplay());
             }
             catch(Exception e){
-                System.out.println("oups2");
             }
                 break;
             }
