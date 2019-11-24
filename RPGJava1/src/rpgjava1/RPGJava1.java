@@ -20,20 +20,26 @@ public class RPGJava1 {
     public static void main(String[] args) {
         // TODO code application logic here
         int[] tmp ={-1,-1,-1,-1,-1,-1,-1};
-        Player p = new Player(0,0,new WizardClass(),"M",1,10,10,new Statistic(),new Inventory(),true,'@',tmp);
-        Character c = new Character("Monster",1,25,25,new Statistic(),new Inventory(),true,'A');
-        System.out.println((int)'1');
-        //ight(p,c);
-        //Game game;
-        //game = new Game();
-        //Wall wall = new Wall();
-        //game.addElemMap(wall, 90, 0);
-        //game.addElemMap(wall, 0, 90);
-        //game.displayMap();
-        //game.initNewProfile("j'enaimarre");
-        //game.writeSave();
-        //game.initCurrentProfileFromSave("j'enaimarre");
-        //game.displayMap();
+        Player p = new Player(0,0,new ClasslessClass(),"Them",1,10,10,new Statistic(),new Inventory(),true,'@',tmp);
+        Trap trap = new Trap();
+        Trap trap2 = new Trap();
+        Mob mob = new Mob("merchant", 700, 9000, 9000,new Statistic(), new Inventory(), true, 'm',
+          120);
+        Merchant merchant = new Merchant("merchant", 700, 9000, 9000,new Statistic(), new Inventory(), true, 'M',
+          120, 20);
+        Chest chest = new Chest();
+        Character c = new Character("Monster",1,5,5,new Statistic(),new Inventory(),true,'A');
+        Game game,game2;
+        
+        game = new Game();
+        game2 = new Game();
+        Wall wall = new Wall();
+        VoidCase voidc = new VoidCase();
+        game.initCurrentProfileFromSave("Yourss");
+        game.displayMap();
+        game.writeSave();
+        game.displayMap();
+        
     }
     
 }

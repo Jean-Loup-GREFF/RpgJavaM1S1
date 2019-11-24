@@ -54,9 +54,11 @@ public class Game {
         InputStreamReader lecture=new InputStreamReader(flux);
         BufferedReader buff=new BufferedReader(lecture);
         String line;
+        int i = 0;
         while ((line = buff.readLine())!=null){
+            
             this.profiles.add(line.split(" "));
-            String[] l = line.split(" ");
+            i++;
         }
         
         buff.close();
@@ -197,12 +199,15 @@ public class Game {
         int test = 0;
         //this.currentMap.initMapFromSave("init", "Twilight's_Castle");
         //profile[1] = currentMap.getName();
-        if (this.initCurrentProfileFromSave(name,"Twilight'sCastle")==1){
+        if (this.testNameNewProfile(name)==1){
             currentProfile = this.profiles.size();
-            this.currentMap.initFirstMapFromSave(name);
+            
             profile[0] = name;
-            profile[1] = this.currentMap.getName();
+            profile[1] = "Twilight'sCastle";
             this.profiles.add(profile);
+            
+            this.currentMap.initFirstMapFromSave(name);
+            
             this.currentMap.changeElem(18,8,p);
             }
         else {
@@ -212,20 +217,43 @@ public class Game {
         return test;
     }
     
-    public int initCurrentProfileFromSave(String name, String name2){
+    public int testNameNewProfile (String name){
         this.currentMap = new Land();
         this.profiles = new ArrayList<>();
         int n = 0;
         int test = 1;
         this.initProfiles();
-        String [] names = {name, name2};
-        int aie = profiles.size();
+        for (String[] i: this.profiles){
+            if (i[0].equals(name)){
+                test = 0;
+                break;
+            }
+            n ++;
+        }
+        return test;
+    }
+    
+    public int initCurrentProfileFromSave(String name){
+        this.currentMap = new Land();
+        this.profiles = new ArrayList<>();
+        int n = 0;
+        int test = 1;
+        this.initProfiles();
         for (String[] i: this.profiles){
             if (i[0].equals(name)){
                 this.currentProfile = n;
                 test = 0;
                 
-                currentMap.initMapFromSave(name, name2);
+                currentMap.initMapFromSave(name, i[1]);
+            try{
+                System.out.println("A"+i[2]);
+                this.trapCurrentPosition = new Trap();
+                this.trapCurrentPosition.InitFromSave(i[2].split(","));
+                System.out.println(this.trapCurrentPosition.getDisplay());
+            }
+            catch(Exception e){
+                System.out.println("oups2");
+            }
                 break;
             }
             n ++;
@@ -234,11 +262,6 @@ public class Game {
     }
     
     public void saveProfile(){
-        String[] profile;
-        profile = new String[2];
-        profile[0] = this.profiles.get(this.currentProfile)[0]; 
-        profile[1] = this.currentMap.getName();
-        this.profiles.set(this.currentProfile, profile);
         try{
         String dirName = "profiles\\";
         File dir = new File(dirName);
@@ -253,7 +276,11 @@ public class Game {
         for (String[] y : this.profiles){
             String SaveLine = "";
             SaveLine += y[0] + " " + y[1] ;
-           
+            try {
+                SaveLine += " " + y[2];
+            }
+            catch(Exception e){
+            }
             ffw.write(SaveLine);
             i++;
             if (i!=l){
