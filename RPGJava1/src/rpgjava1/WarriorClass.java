@@ -9,9 +9,14 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Matthieu
+ * @author Matthieu HUE and Jean-Loup GREFF
  */
 public class WarriorClass extends ClassArchetype {
+
+    /**
+     * method to init a warrior class
+     *
+     */
     public WarriorClass(){
         super("Warrior",new ArrayList<>(),new Statistic(5,5,2,2,1,1,50),new Statistic(5,0,0,0,0,0,0));
         super.setSkills(skills());
@@ -27,6 +32,7 @@ public class WarriorClass extends ClassArchetype {
         return skills;
     }
     
+    @Override
     public String getText(){
         return "warrior";
     }

@@ -5,9 +5,6 @@
  */
 package rpgjava1;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  *
  * @author Matthieu HUE and Jean-Loup GREFF
@@ -70,6 +67,7 @@ public class Character extends AppOnMap implements DealsDamage{
         this.isAlive = isAlive;
     }
 
+    @Override
     public String getName() {
         return name;
     }
@@ -104,10 +102,12 @@ public class Character extends AppOnMap implements DealsDamage{
         this.level = level;
     }
 
+    @Override
     public int getHealth() {
         return health;
     }
 
+    @Override
     public void setHealth(int health) {
         this.health = health;
     }
@@ -132,6 +132,7 @@ public class Character extends AppOnMap implements DealsDamage{
         this.healthM = healthM;
     }
 
+    @Override
     public Statistic getStats() {
         return stats;
     }
@@ -145,6 +146,7 @@ public class Character extends AppOnMap implements DealsDamage{
         this.stats = stats;
     }
 
+    @Override
     public Inventory getInventory() {
         return inventory;
     }
@@ -159,10 +161,12 @@ public class Character extends AppOnMap implements DealsDamage{
         this.inventory = inventory;
     }
 
+    @Override
     public boolean isIsAlive() {
         return isAlive;
     }
 
+    @Override
     public void setIsAlive(boolean isAlive) {
         this.isAlive = isAlive;
     }
@@ -178,10 +182,12 @@ public class Character extends AppOnMap implements DealsDamage{
         DealsDamage.dealsDamage(stats.getStrenght(),target);
     }
     
+    @Override
     public void speak(){
         System.out.println(this.name+":blabla");
     }
     
+    @Override
     public String getSaveText(){
         
         String save = "";

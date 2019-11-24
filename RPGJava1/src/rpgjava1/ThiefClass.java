@@ -9,9 +9,14 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Matthieu
+ * @author Matthieu HUE and Jean-Loup GREFF
  */
 public class ThiefClass extends ClassArchetype{
+
+    /**
+     * method to init a thief class
+     *
+     */
     public ThiefClass(){
         super("Thief",new ArrayList<>(),new Statistic(1,0,2,2,0,1,50),new Statistic(0,0,0,5,0,0,0));
         super.setSkills(skills());
@@ -26,6 +31,7 @@ public class ThiefClass extends ClassArchetype{
         return skills;
     }
     
+    @Override
     public String getText(){
         return "thief";
     }

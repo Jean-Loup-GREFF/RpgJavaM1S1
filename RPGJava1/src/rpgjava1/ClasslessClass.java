@@ -9,9 +9,14 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Matthieu
+ * @author Matthieu HUE and Jean-Loup GREFF
  */
 public class ClasslessClass extends ClassArchetype{
+
+    /**
+     * Init a classless object which have all other class skills for test
+     *
+     */
     public ClasslessClass(){
         super("None",new ArrayList<>(),new Statistic(1,1,1,1,1,1,50), new Statistic(2,2,2,2,2,0,0));
         super.setSkills(skills());
@@ -36,6 +41,7 @@ public class ClasslessClass extends ClassArchetype{
         return skills;
         
     }
+    @Override
     public String getText(){
         return "classless";
     }

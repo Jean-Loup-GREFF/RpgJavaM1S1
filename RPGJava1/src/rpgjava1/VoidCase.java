@@ -7,14 +7,19 @@ package rpgjava1;
 
 /**
  *
- * @author Jean-Loup
+ * @author Matthieu HUE and Jean-Loup GREFF
  */
 public class VoidCase extends AppOnMap{
     
+    /**
+     * method to init a blank on the map
+     *
+     */
     public VoidCase() {
         super(' ');
     }
 
+    @Override
     public char getDisplay(){
         return super.getDisplay();
     }

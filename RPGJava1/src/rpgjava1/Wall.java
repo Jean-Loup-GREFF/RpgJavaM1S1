@@ -11,6 +11,10 @@ package rpgjava1;
  */
 public class Wall extends AppOnMap{
     
+    /**
+     * method to init a wall object
+     *
+     */
     public Wall() {
         super('#');
     }

@@ -7,9 +7,16 @@ package rpgjava1;
 
 /**
  *
- * @author Matthieu
+ * @author Matthieu HUE and Jean-Loup GREFF
  */
 public interface DealsDamage {
+
+    /**
+     * function to deal damage to another object
+     *
+     * @param damageDealt
+     * @param target
+     */
     static void dealsDamage(int damageDealt, AppOnMap target){
         int damage = damageDealt - target.getStats().getVitality();
         target.setHealth(target.getHealth()-damage);

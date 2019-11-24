@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author Matthieu
+ * @author Matthieu HUE and Jean-Loup GREFF
  */
 public class Player extends Character implements DealsDamage{
     private int exp;
@@ -18,6 +18,11 @@ public class Player extends Character implements DealsDamage{
     //weapon, head, torso, pant, gauntlets, amulet, ri,g
     private int[] equipment;
 
+    /**
+     * method to initialize a player with the name you want
+     *
+     * @param name
+     */
     public Player(String name){
         super(name);
         this.exp = 0;
@@ -27,6 +32,22 @@ public class Player extends Character implements DealsDamage{
         this.equipment = tmp;
     }
     
+    /**
+     * method to init a player object with all the parameters possible
+     *
+     * @param exp
+     * @param expM
+     * @param archetype
+     * @param name
+     * @param level
+     * @param health
+     * @param healthM
+     * @param stats
+     * @param inventory
+     * @param isAlive
+     * @param display
+     * @param equipment
+     */
     public Player(int exp, int expM, ClassArchetype archetype, String name, 
        int level, int health, int healthM, Statistic stats, Inventory inventory,
        boolean isAlive, char display, int[] equipment) {
@@ -38,38 +59,67 @@ public class Player extends Character implements DealsDamage{
         super.setStats(this.archetype.getStatsGrow());
     }
 
+    @Override
     public int getExp() {
         return exp;
     }
 
+    /**
+     * method to set exp of a player object
+     *
+     * @param exp
+     */
     public void setExp(int exp) {
         this.exp = exp;
     }
 
+    @Override
     public int getExpM() {
         return expM;
     }
 
+    /**
+     * method to set max exp of a player object
+     *
+     * @param expM
+     */
     public void setExpM(int expM) {
         this.expM = expM;
     }
 
+    /**
+     * method to get the archetype of a player object
+     *
+     * @return
+     */
     public ClassArchetype getArchetype() {
         return archetype;
     }
 
+    /**
+     * method to set the archetype of a player object
+     *
+     * @param archetype
+     */
     public void setArchetype(ClassArchetype archetype) {
         this.archetype = archetype;
     }
 
+    @Override
     public int[] getEquipment() {
         return equipment;
     }
 
+    /**
+     * method to set the equipment of a player object
+     *
+     * @param equipment
+     */
     public void setEquipment(int[] equipment) {
         this.equipment = equipment;
     }
 
+    @Override
     public int levelUp(){
         int level = super.getLevel();
         if(this.exp >= level*10){
@@ -81,11 +131,14 @@ public class Player extends Character implements DealsDamage{
         return 0;
     }
     
+    @Override
     public void setOnePiece(int piece, int position){
         this.equipment[piece] = position;
-        super.setStats(super.getStats().add(super.getInventory().getInventory().get(piece).getStats()));
+        super.setStats(super.getStats().add(super.getInventory().getInventory()
+                .get(piece).getStats()));
     }
 
+    @Override
     public void attack(Character target){
         Scanner keyboard = new Scanner(System.in);
         String choice = "";
@@ -149,17 +202,21 @@ public class Player extends Character implements DealsDamage{
         save += ",";
         save += this.exp + ",";
         save += this.expM + ",";
-        if (this.archetype.getText() == "warrior"){
-            save += "warrior,";
-        }
-        else if (this.archetype.getText() == "wizard"){
-            save += "wizard";
-        }
-        else if (this.archetype.getText() == "thief"){
-            save += "thief,";
-        }
-        else if (this.archetype.getText() == "classless"){
-            save += "classless,";
+        if (null != this.archetype.getText())switch (this.archetype.getText()) {
+            case "warrior":
+                save += "warrior,";
+                break;
+            case "wizard":
+                save += "wizard";
+                break;
+            case "thief":
+                save += "thief,";
+                break;
+            case "classless":
+                save += "classless,";
+                break;
+            default:
+                break;
         }
         for (int i = 0; i < this.equipment.length; i++){
             save += this.equipment[0];
@@ -180,17 +237,21 @@ public class Player extends Character implements DealsDamage{
         super.InitFromSave(save1);
         this.exp = Integer.parseInt(save2[0]);
         this.expM = Integer.parseInt(save2[1]);
-        if (save2[2] == "warrior"){
-            this.archetype = new WarriorClass();
-        }
-        else if (save2[2] == "wizard"){
-            this.archetype = new WizardClass();
-        }
-        else if (save2[2] == "thief"){
-            this.archetype = new ThiefClass();
-        }
-        else if (save2[2] == "classless"){
-            this.archetype = new ClasslessClass();
+        if (null != save2[2])switch (save2[2]) {
+            case "warrior":
+                this.archetype = new WarriorClass();
+                break;
+            case "wizard":
+                this.archetype = new WizardClass();
+                break;
+            case "thief":
+                this.archetype = new ThiefClass();
+                break;
+            case "classless":
+                this.archetype = new ClasslessClass();
+                break;
+            default:
+                break;
         }
         int[] equi = {Integer.parseInt(equipmentv2[0]),
             Integer.parseInt(equipmentv2[1]),Integer.parseInt(equipmentv2[2]),

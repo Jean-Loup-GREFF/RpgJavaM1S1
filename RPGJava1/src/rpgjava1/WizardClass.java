@@ -9,9 +9,14 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Matthieu
+ * @author Matthieu HUE and Jean-Loup GREFF
  */
 public class WizardClass extends ClassArchetype {
+
+    /**
+     * method to init a wiard class
+     *
+     */
     public WizardClass(){
         super("Wizard",new ArrayList<>(),new Statistic(0,0,1,1,2,2,50),new Statistic(0,0,0,0,5,0,0));
         super.setSkills(skills());
@@ -26,6 +31,7 @@ public class WizardClass extends ClassArchetype {
         skills.add(new Skill("Gather Storm's",new Statistic(0,0,0,2,2,0,0),30,0,30,0));
         return skills;
     }
+    @Override
     public String getText(){
         return "wizard";
     }

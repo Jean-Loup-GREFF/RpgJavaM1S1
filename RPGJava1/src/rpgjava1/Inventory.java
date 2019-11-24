@@ -7,55 +7,104 @@ package rpgjava1;
 import java.util.ArrayList; // import the ArrayList class
 /**
  *
- * @author Matthieu
+ * @author Matthieu HUE and Jean-Loup GREFF
  */
 public class Inventory {
     private ArrayList<Item> inventory;
     private ArrayList<Integer> quantity;
     private int gold;
 
+    /**
+     * Init an Inventory object
+     *
+     */
     public Inventory() {
         this.inventory = new ArrayList<>();
         this.quantity = new ArrayList<>();
         this.gold = 0;
     }
     
-    public Inventory(ArrayList<Item> inventory, ArrayList<Integer> quantity, int gold) {
+    /**
+     * init an inventory object with chosen parameters 
+     *
+     * @param inventory
+     * @param quantity
+     * @param gold
+     */
+    public Inventory(ArrayList<Item> inventory, ArrayList<Integer> quantity,
+            int gold) {
         this.inventory = inventory;
         this.quantity = quantity;
         this.gold = gold;
     }
     
-    public void InitInventory (int golf){
+    /**
+     * Init an inventory with only gold as parmeter
+     *
+     * @param gold
+     */
+    public void InitInventory (int gold){
         this.inventory = new ArrayList<>();
         this.quantity = new ArrayList<>();
-        this.gold = golf;
+        this.gold = gold;
     }
 
+    /**
+     * 
+     *
+     * @return
+     */
     public ArrayList<Item> getInventory() {
         return inventory;
     }
 
+    /**
+     *
+     * @param inventory
+     */
     public void setInventory(ArrayList<Item> inventory) {
         this.inventory = inventory;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Integer> getQuantity() {
         return quantity;
     }
 
+    /**
+     * set the quantity of the items of the inventory
+     *
+     * @param quantity
+     */
     public void setQuantity(ArrayList<Integer> quantity) {
         this.quantity = quantity;
     }
 
+    /**
+     * method to get the gold of an inventory object
+     *
+     * @return
+     */
     public int getGold() {
         return gold;
     }
 
+    /**
+     * method to set the gold of an inventory
+     *
+     * @param gold
+     */
     public void setGold(int gold) {
         this.gold = gold;
     }
     
+    /**
+     * method to display on screen what is in an inventory object
+     *
+     */
     public void display(){
         for(int i = 0;i < this.inventory.size(); i++){
             System.out.print(this.quantity.get(i));
@@ -66,6 +115,13 @@ public class Inventory {
         System.out.println(this.gold);
     }
     
+    /**
+     * method to remove an item from inventory object
+     *
+     * @param item
+     * @param number
+     * @return
+     */
     public int remove(Item item, int number){
         int index = this.inventory.indexOf(item);
         if(0 < this.inventory.size() || this.inventory.size() < index){
@@ -73,11 +129,13 @@ public class Inventory {
             return 1;
         }
         if(number < 0){
-            System.out.println("You can't take a negative amount of " + this.inventory.get(index));
+            System.out.println("You can't take a negative amount of " 
+                    + this.inventory.get(index));
             return 1;
         }
         if(this.quantity.get(index) < number){
-            System.out.println("You don't have enough " + this.inventory.get(index));
+            System.out.println("You don't have enough " 
+                    + this.inventory.get(index));
             return 1;
         }
         
@@ -89,9 +147,17 @@ public class Inventory {
        return 0; 
     }
     
+    /**
+     * method to add an item in the invetory
+     *
+     * @param item
+     * @param number
+     * @return
+     */
     public int add(Item item, int number){
         if(number < 0){
-            System.out.println("You can't obtain a negative amount of " + item.getName());
+            System.out.println("You can't obtain a negative amount of " 
+                    + item.getName());
             return 1;
         }
         if(this.inventory.contains(item)){
@@ -105,6 +171,11 @@ public class Inventory {
         return 0;
     }
     
+    /**
+     * method to init the inventory object from a save text data
+     *
+     * @param save
+     */
     public void InitFromSave (String [] save){
         if (save.length == 1){
             this.InitInventory(Integer.parseInt(save[0]));
@@ -129,6 +200,11 @@ public class Inventory {
         }
     }
     
+    /**
+     * method to get all the data to save an inventory
+     *
+     * @return
+     */
     public String getSaveTextInv(){
         
         int i;

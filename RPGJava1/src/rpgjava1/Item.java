@@ -7,7 +7,7 @@ package rpgjava1;
 
 /**
  *
- * @author Matthieu
+ * @author Matthieu HUE and Jean-Loup GREFF
  */
 public class Item {
     private String name;
@@ -16,6 +16,10 @@ public class Item {
     private Statistic stats;
     private String description;
 
+    /**
+     * method to initialize an item object
+     *
+     */
     public Item() {
         this.name = "";
         this.rarity = Rarity.COMMUN;
@@ -23,7 +27,17 @@ public class Item {
         this.stats = new Statistic();
     }
     
-    public Item(String name, Rarity rarity, int price, Statistic stats, String description) {
+    /**
+     * method to initialize an item object with all the parameters
+     *
+     * @param name
+     * @param rarity
+     * @param price
+     * @param stats
+     * @param description
+     */
+    public Item(String name, Rarity rarity, int price, Statistic stats,
+            String description) {
         this.name = name;
         this.rarity = rarity;
         this.price = price;
@@ -31,46 +45,101 @@ public class Item {
         this.description = description;
     }
 
+    /**
+     * method to get the name of an item object
+     *
+     * @return
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * method to set the name of an item object
+     *
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * method to get the rarity of an item object
+     *
+     * @return
+     */
     public Rarity getRarity() {
         return rarity;
     }
 
+    /**
+     * method to set the rarity of an item object
+     *
+     * @param rarity
+     */
     public void setRarity(Rarity rarity) {
         this.rarity = rarity;
     }
 
+    /**
+     * method to get the price of an item object
+     *
+     * @return
+     */
     public int getPrice() {
         return price;
     }
 
+    /**
+     * method to set the price of an item object
+     *
+     * @param price
+     */
     public void setPrice(int price) {
         this.price = price;
     }
 
+    /**
+     * method to get the stats of an item object
+     *
+     * @return
+     */
     public Statistic getStats() {
         return stats;
     }
 
+    /**
+     * method to set the stats of an item object
+     *
+     * @param stats
+     */
     public void setStats(Statistic stats) {
         this.stats = stats;
     }
 
+    /**
+     * method to get the description of an item object
+     *
+     * @return
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * method to set the description of an item object
+     *
+     * @param description
+     */
     public void setDescription(String description) {
         this.description = description;
     }
     
+    /**
+     * method to init an item object from the string given by the init save land
+     *
+     * @param save
+     */
     public void InitFromSaveIt (String[] save){
         this.name = save[0];
         switch (Integer.parseInt(save[1])){
@@ -100,6 +169,12 @@ public class Item {
         this.stats.InitFromSaveStat(save[3].split("/"));
     }
     
+    /**
+     * method to get the string in order to create the strings to
+     * save of an item object
+     *
+     * @return
+     */
     public String getSaveTextIt (){
         String save = "";
         save += this.name + "%";
