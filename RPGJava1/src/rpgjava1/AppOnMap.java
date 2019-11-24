@@ -36,6 +36,7 @@ public class AppOnMap {
     }
     
     /**
+     * method to display on map
      *
      * @return
      */
@@ -73,6 +74,7 @@ public class AppOnMap {
      * method to override for speaking aspect
      *
      * @param target
+     * @param keyboard
      */
     public void attack(AppOnMap target, Scanner keyboard){}
 
@@ -241,6 +243,11 @@ public class AppOnMap {
      */
     public int[] getEquipment() {return null;}
    
+    /**
+     * method to set exp
+     *
+     * @param exp
+     */
     public void setExp(int exp){}
     
     

@@ -13,23 +13,43 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+/**
+ *
+ * @author Matthieu HUE and Jean-Loup GREFF
+ */
 public class Land {
     private String name;
     private ArrayList<AppOnMap> elemMap;
     private ArrayList<ArrayList<Integer>> map;
 
+    /**
+     * method to initialize a land object
+     *
+     */
     public Land() {
         this.name = "1";
         this.elemMap = new ArrayList<>();
         this.map = new ArrayList<>();
     }
    
-    public Land(String name, ArrayList<AppOnMap> elemMap, ArrayList<ArrayList<Integer>> map) {
+    /**
+     * method to initialize a land object with all parameters
+     *
+     * @param name
+     * @param elemMap
+     * @param map
+     */
+    public Land(String name, ArrayList<AppOnMap> elemMap,
+            ArrayList<ArrayList<Integer>> map) {
         this.name = name;
         this.elemMap = elemMap;
         this.map = map;
     }
  
+    /**
+     * method to init the map
+     *
+     */
     public void InitMap(){
         this.name = new String();
         this.name = "";
@@ -37,6 +57,12 @@ public class Land {
         this.map = new ArrayList<>();
     }
     
+    /**
+     * method to init a map from an ArrayListArrayListAppOnMap
+     *
+     * @param name
+     * @param Save
+     */
     public void InitMap(String name ,ArrayList<ArrayList<AppOnMap>> Save){
         
         // Save is an array list with first element name of the map
@@ -72,10 +98,22 @@ public class Land {
         
     }
     
+    /**
+     * method to get an apponmap object from the land object
+     *
+     * @param x
+     * @param y
+     * @return
+     */
     public AppOnMap getEntity (int x,int y){
         return elemMap.get(map.get(y).get(x));
     }
     
+    /**
+     * method to get player position on map
+     *
+     * @return
+     */
     public int[] getPlayer (){
 
         Player p = new Player("");
@@ -102,6 +140,13 @@ public class Land {
         return coord;
     }
     
+    /**
+     * method to init a map from an ArrayList<ArrayList<AppOnMap>> with name
+     * parameter
+     *
+     * @param Save
+     * @param name
+     */
     public void InitMap(ArrayList<ArrayList<AppOnMap>> Save, String name){
         
         // Save is an array list with first element name of the map
@@ -137,14 +182,23 @@ public class Land {
         
     }
 
+    /**
+     * method to init a land object with the name of the map
+     *
+     * @param name
+     */
     public Land(String name) {
         this.name = name;
         this.map = new ArrayList<>();
         this.elemMap = new ArrayList<>();
     }
 
+    /**
+     * method the display the map on screen
+     *
+     */
     public void displayMap() {
-        int n = 0;
+        
         for (ArrayList<Integer> i : this.map){
             for (Integer j : i){
                 if ((""+this.elemMap.get(j).getDisplay()).equals("+")){
@@ -160,14 +214,26 @@ public class Land {
                 }
             }
             System.out.println();
-            n++;
         }
     }
 
+    /**
+     * method to get the name of the map
+     *
+     * @return
+     */
     public String getName() {
         return name;
     }
     
+    /**
+     * method to change an element to one we want of the map throught coordonate
+     * and apponmap parameters
+     *
+     * @param x
+     * @param y
+     * @param news
+     */
     public void changeElem (Integer x, Integer y, AppOnMap news){
                 if(!this.isElem(news)){
                     this.map.get(y).set(x,this.elemMap.size());
@@ -178,6 +244,16 @@ public class Land {
                 }
     }
     
+    /**
+     * method to move an app on map on coordonate (x,y) to a position indicated
+     * by buton
+     *
+     * @param x
+     * @param y
+     * @param buton
+     * @param game
+     * @return
+     */
     public int moveTo (Integer x, Integer y, Integer buton, Game game){
         
         VoidCase voids = new VoidCase();
@@ -185,13 +261,15 @@ public class Land {
         AppOnMap temp = new AppOnMap();
         
         switch(buton){
-            case (0):
+            case (0)://up buton case
                 if (game.getTrapCurrentPosition() == null){
+                //test for trap gestion
                     temp = this.elemMap.get(this.map.get(y).get(x));
                     changeElem (x, y, voids);
                     changeElem (x, y-1, temp);
                 }
                 else{
+                    //gestion when on trap
                     temp = this.elemMap.get(this.map.get(y).get(x));
                     changeElem (x, y, game.getTrapCurrentPosition());
                     changeElem (x, y-1, temp);
@@ -200,39 +278,45 @@ public class Land {
                     game.setTrapCurrentPosition(null);
                 }
                 break;
-            case(1):
+            case(1)://left button case
                 if (game.getTrapCurrentPosition() == null){
+                    //test for trap gestion
                     temp = this.elemMap.get(this.map.get(y).get(x));
                     changeElem (x, y, voids);
                     changeElem (x-1, y, temp);
                 }
                 else{
+                    //gestion when on trap
                     temp = this.elemMap.get(this.map.get(y).get(x));
                     changeElem (x, y, game.getTrapCurrentPosition());
                     changeElem (x-1, y, temp);
                     game.setTrapCurrentPosition(null);
                 }
                 break;
-            case(2):
+            case(2)://down case buton
                 if (game.getTrapCurrentPosition() == null){
+                    //test for trap gestion
                     temp = this.elemMap.get(this.map.get(y).get(x));
                     changeElem (x, y, voids);
                     changeElem (x, y+1, temp);
                 }
                 else{
+                    //gestion when on trap
                     temp = this.elemMap.get(this.map.get(y).get(x));
                     changeElem (x, y, game.getTrapCurrentPosition());
                     changeElem (x, y+1, temp);
                     game.setTrapCurrentPosition(null);
                 }
                 break;
-            case(3):
+            case(3)://rightc case buton 
                 if (game.getTrapCurrentPosition() == null){
+                    //test for trap gestion
                     temp = this.elemMap.get(this.map.get(y).get(x));
                     changeElem (x, y, voids);
                     changeElem (x+1, y, temp);
                 }
                 else{
+                    //gestion when on trap
                     temp = this.elemMap.get(this.map.get(y).get(x));
                     changeElem (x, y, game.getTrapCurrentPosition());
                     changeElem (x+1, y, temp);
@@ -244,6 +328,11 @@ public class Land {
         return test;
     }
     
+    /**
+     * method to get the map as an ArrayListArrayListAppOnMap
+     *
+     * @return
+     */
     public ArrayList<ArrayList<AppOnMap>> getmap (){
         ArrayList<ArrayList<AppOnMap>> save;
         save = new ArrayList<>();
@@ -260,6 +349,12 @@ public class Land {
              
     }
     
+    /**
+     * method to init a map for a new profile
+     *
+     * @param name
+     * @return
+     */
     public String initFirstMapFromSave(String name){
         this.map = new ArrayList<>();
         this.elemMap = new ArrayList<>();
@@ -291,6 +386,10 @@ public class Land {
                 linemap = new ArrayList<>();
                 
                 for (i = 0; i < lenObjectLine; i++){
+                    /*
+                    all the slpits and cases are to manage all the 
+                    initialisations possible for all objects possible
+                    */
                     elem = new AppOnMap();
                     Character cha = new Character("",'.');
                     Player play = new Player(""); 
@@ -304,7 +403,7 @@ public class Land {
                     j = type.length;
                     switch(j){
                         case 1:
-                            elem.InitFromSave(type[0]);//
+                            elem.InitFromSave(type[0]);
                             if (! isElem(elem)){
                                 n = this.elemMap.size();
                                 this.elemMap.add(elem);
@@ -389,12 +488,10 @@ public class Land {
                     }
                     
                     linemap.add(n);
-                    //linemap.add(elem);
                     }
                     this.map.add(linemap);
                 
         }
-        //this.InitMap(map,namemap);
        
         buff.close(); 
         }		
@@ -404,12 +501,20 @@ public class Land {
         return this.name;
     }
     
+    /**
+     * init a map from a save thanks to the path given by the profile name and
+     * map
+     *
+     * @param nameProf
+     * @param namemap
+     */
     public void initMapFromSave(String nameProf, String namemap){
         this.name = namemap;
         this.map = new ArrayList<>();
         this.elemMap = new ArrayList<>();
         try{
-        InputStream flux=new FileInputStream("C:\\Game\\ANewDawn\\Save\\"+nameProf+"\\"+ this.name +".txt"); 
+        InputStream flux = new FileInputStream("save"+nameProf+"\\"
+                + this.name +".txt"); 
         InputStreamReader lecture=new InputStreamReader(flux);
         BufferedReader buff=new BufferedReader(lecture);
         String line;
@@ -436,6 +541,10 @@ public class Land {
                 linemap = new ArrayList<>();
                 
                 for (i = 0; i < lenObjectLine; i++){
+                    /*
+                    all the slpits and cases are to manage all the 
+                    initialisations possible for all objects possible
+                    */
                     elem = new AppOnMap();
                     Character cha = new Character("", '.');
                     Player play = new Player(""); 
@@ -537,7 +646,6 @@ public class Land {
                 
         
         }
-        //this.InitMap(map,namemap);
        
         buff.close(); 
         }		
@@ -546,6 +654,12 @@ public class Land {
         }
     }
     
+    /**
+     * get the position of an elem on the elemMap array
+     *
+     * @param Elem
+     * @return
+     */
     public int posElem (AppOnMap Elem){
         int n = 0;
         for(AppOnMap j: this.elemMap){
@@ -557,6 +671,12 @@ public class Land {
         return n;
     }
     
+    /**
+     * method to test if the elem is already put at least once in the elem array 
+     *
+     * @param Elem
+     * @return
+     */
     public boolean isElem (AppOnMap Elem){
         boolean test = false;
         for(AppOnMap j: this.elemMap){
@@ -568,13 +688,18 @@ public class Land {
         return test;
     }
     
+    /**
+     * method to save the map as a test file
+     *
+     * @param name
+     */
     public void saveMap(String name){
         try{
         File ff; // définir l'arborescence
-        String dirName = "C:\\Game\\ANewDawn\\Save\\"+name+"\\";
+        String dirName = "Save\\"+name+"\\";
         File dir = new File(dirName);
         boolean isCreated = dir.mkdirs();
-        ff = new File("C:\\Game\\ANewDawn\\Save\\"+name+"\\"+ this.name +".txt");
+        ff = new File("Save\\"+name+"\\"+ this.name +".txt");
         ArrayList<ArrayList<AppOnMap>> save;
         save = new ArrayList<>();
         save = this.getmap();
@@ -608,94 +733,14 @@ public class Land {
     
 }
     
-    //public void initMapFromSave2(String nameProf, String namemap){
-        // Gson gson = new Gson();
-
-        //1. JSON to Java object, read it from a file.
-        // Staff staff = gson.fromJson(new FileReader("D:\file.json"), Staff.class);
-
-        //2. JSON to Java object, read it from a Json String.
-        // String jsonInString = "{'name' : 'mkyong'}";
-        // Staff staff = gson.fromJson(jsonInString, Staff.class);
-
-        //JSON to JsonElement, convert to String later.
-        // JsonElement json = gson.fromJson(new FileReader("D:\file.json"), JsonElement.class);
-        // String result = gson.toJson(json);
-    //}
-        
-    //public void saveMap2(String name){
-        //Gson gson = new Gson();
-        //Staff obj = new Staff();
-        //try{
-        //File ff; // définir l'arborescence
-        //ff = new File("C:\\Game\\ANewDawn\\Save\\"+name+"\\"+ this.name +".txt");
-       // ArrayList<ArrayList<AppOnMap>> Save;
-        //Save = new ArrayList<>();
-        //Save = getmap();
-        //int test = 1;
-        //int limitLine = 0;
-        
-        
-        
-        //ff.createNewFile();
-        //FileWriter ffw = new FileWriter(ff);
-        
-        //for (ArrayList<AppOnMap> y : Save){
-            //String SaveLine = "";
-            //ArrayList<Integer> line; 
-           // line = new ArrayList<>();
-            //limitLine = y.size();
-            //for (AppOnMap x : y){
-               // SaveLine += x.getSaveText();
-                //if (!(test == limitLine)){
-               //     SaveLine += ";";
-                //}
-                //else{
-                //    ffw.write(SaveLine);
-                //    ffw.write("\n");
-                //}
-                //test ++;
-                //}
-            //}
-        
-        //ffw.close(); // fermer le fichier à la fin des traitements
-        //} 
-        //catch (Exception e) {}
-    
-//}
-    
-    public boolean elemHere (AppOnMap Elem){
-       
-        boolean test = false;
-        try{
-                    int i = 0;
-                    for(AppOnMap j : this.elemMap){
-                        if (j == Elem){
-                            test = true;
-                            break;
-                        }
-                        i++;
-                    }
-                }
-                catch(Exception e){}
-        return test;
-    }
-    
-    public int placeElem(AppOnMap Elem){
-        int i = -1;
-        try{
-                    i = 0;
-                    for(AppOnMap j : this.elemMap){
-                        if (j == Elem){
-                            break;
-                        }
-                        i++;
-                    }
-                }//
-                catch(Exception e){}
-        return i;
-    }
-    
+    /**
+     * method which helped to initialize the first map there are still some
+     * unresolded problems
+     *
+     * @param Elem
+     * @param x
+     * @param y
+     */
     public void addElemMap (AppOnMap Elem, int x, int y){
         
         int lenHeigh = this.map.size();
@@ -727,10 +772,10 @@ public class Land {
             int nY = 1;
             int nX = 1;
             
-            boolean test = elemHere(Elem);
+            boolean test = isElem(Elem);
             int pos = -1;
             if(test){
-                pos = placeElem(Elem);
+                pos = posElem(Elem);
             }
             ArrayList<Integer> line;
             line = new ArrayList<>();
