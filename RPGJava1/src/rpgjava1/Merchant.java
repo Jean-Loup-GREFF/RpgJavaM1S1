@@ -18,7 +18,7 @@ public class Merchant extends Character implements Looting{
      *
      */
     public Merchant(){
-        super("Merchant");
+        super("Merchant", ' ');
         this.tariffBuy = 0.1;
         this.tariffSell = 1.2;
         super.setStats(new Statistic(999,999,1,1,1,1,100));
@@ -40,7 +40,7 @@ public class Merchant extends Character implements Looting{
      */
     public Merchant(String name, int level, int health, int healthM, 
           Statistic stats, Inventory inventory, boolean isAlive, char display,
-          int tariffSell, int tariffBuy){
+          double tariffSell, double tariffBuy){
         super(name,level,health,healthM,stats,inventory,isAlive,display);
         this.tariffBuy = tariffBuy;
         this.tariffSell = tariffSell;
@@ -49,7 +49,8 @@ public class Merchant extends Character implements Looting{
     @Override
     public void buy(Inventory seller, Inventory trade){
         trade.setGold((int)(this.tariffBuy * trade.getGold()));
-        super.getInventory().setGold(super.getInventory().getGold() + trade.getGold());
+        super.getInventory().setGold(
+                super.getInventory().getGold() + trade.getGold());
         Looting.commerce(seller, trade, super.getInventory());
     }
     @Override

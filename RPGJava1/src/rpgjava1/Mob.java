@@ -18,7 +18,7 @@ public class Mob extends Character implements Looting{
      *
      */
     public Mob(){
-        super("Mob");
+        super("Mob",'m');
         this.exp = 1;
     }
     
@@ -50,6 +50,11 @@ public class Mob extends Character implements Looting{
     public void defeat(Player winner){
         winner.setExp(winner.getExp() + this.exp);
         Looting.loot(super.getInventory(), winner);
+        System.out.println(winner.getName() + " wins " + this.exp + " Exp(s)");
+    }
+    
+    public void speak(){
+        System.out.println("Kill!");
     }
 
     @Override

@@ -6,6 +6,7 @@
 package rpgjava1;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  *
@@ -73,7 +74,7 @@ public class AppOnMap {
      *
      * @param target
      */
-    public void attack(AppOnMap target){}
+    public void attack(AppOnMap target, Scanner keyboard){}
 
     /**
      * method to override for getting Exp aspect
@@ -160,8 +161,8 @@ public class AppOnMap {
      *
      * @return
      */
-    public String getName() {return null;}
-    
+    public String getName() {return "";}
+
     /**
      * method to override for dealing damage by traps aspect
      *
@@ -239,5 +240,8 @@ public class AppOnMap {
      * @return
      */
     public int[] getEquipment() {return null;}
+   
+    public void setExp(int exp){}
+    
     
 }
