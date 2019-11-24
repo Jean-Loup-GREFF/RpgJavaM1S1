@@ -36,7 +36,6 @@ public class Player extends Character implements DealsDamage{
         this.archetype = archetype;
         this.equipment = equipment;
         super.setStats(this.archetype.getStatsGrow());
-        
     }
 
     public int getExp() {
@@ -84,23 +83,15 @@ public class Player extends Character implements DealsDamage{
     
     public void setOnePiece(int piece, int position){
         this.equipment[piece] = position;
+        super.setStats(super.getStats().add(super.getInventory().getInventory().get(piece).getStats()));
     }
-    
-    @Override
-    @SuppressWarnings("empty-statement")
+
     public void attack(Character target){
         Scanner keyboard = new Scanner(System.in);
         String choice = "";
         boolean use = false;
-        //System.out.println("Press A");
-        /*while(!use){
-            /*if(KeyPressing.isAPress()){
-                System.out.println("ça marche !!!!");
-                use = true;
-            } 
-        }*/
         do{
-            choice = "";
+            this.archetype.displaySkill();
             choice = keyboard.nextLine();
             Skill skill = new Skill("");
             int damage = 0;

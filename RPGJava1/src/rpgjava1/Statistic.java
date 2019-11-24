@@ -123,7 +123,6 @@ public class Statistic {
         this.intelligence = Integer.parseInt(save[4]);
         this.wisdom = Integer.parseInt(save[5]);
         this.luck = Integer.parseInt(save[6]);
-        
     }
     
     public String getSaveTextStat (){
@@ -132,9 +131,13 @@ public class Statistic {
                 + this.agility + "/" + this.intelligence + "/" + this.wisdom
                 + "/" + this.luck + "/";
         return save;
+    }
     
-   
-    
-    
+    public String toString(){
+        String save = "";
+        save += this.strenght + "\n" + this.vitality + "\n" + this.dexterity + "\n"
+                + this.agility + "\n" + this.intelligence + "\n" + this.wisdom
+                + "\n" + this.luck + "\n";
+        return save;
     }
 }

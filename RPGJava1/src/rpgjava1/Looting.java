@@ -11,9 +11,14 @@ package rpgjava1;
  */
 public interface Looting {
     static void commerce(Inventory dealer, Inventory trade, Inventory getter){
+        if(trade.getGold()>getter.getGold()){
+            System.out.println("You don't have enought money!");
+            return ;
+        }
         getter.setGold(getter.getGold()-trade.getGold());
         dealer.setGold(dealer.getGold() + trade.getGold());
         loopRemoveItems(trade,getter);
+        loopAddItems(dealer,trade);
     }
     static void loot(Inventory dealer,Character getter){
         getter.getInventory().setGold(dealer.getGold()+getter.getInventory().getGold());

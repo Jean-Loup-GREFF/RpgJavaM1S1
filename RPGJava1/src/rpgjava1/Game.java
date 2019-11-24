@@ -28,6 +28,7 @@ public class Game {
     private ArrayList<String[]> profiles;
     private int currentProfile;
     private char up, down, left, right;
+    private Trap trapCurrentPosition;
 
     public Game(){
         this.currentMap = new Land();
@@ -36,12 +37,14 @@ public class Game {
         down = 's';
         left = 'q';
         right = 'd';
+        this.trapCurrentPosition = null;
     }
     
     public Game(Land currentMap, ArrayList<String[]> profiles, int currentProfile) {
         this.currentMap = currentMap;
         this.profiles = profiles;
         this.currentProfile = currentProfile;
+        this.trapCurrentPosition = null;
     }
     
     public void initProfiles() {
@@ -136,6 +139,9 @@ public class Game {
             else if (move == this.right){
                 ret = 3;
             }
+            else if (move == 'i'){
+                ret = 4;
+            }
             else{
                 this.profiles.get(this.profiles.size());
             }
@@ -153,10 +159,7 @@ public class Game {
     public void moveOnMapTest (int x, int y, char move){
         int buton = butonToInt(move);
         this.currentMap.moveTo(x,y,buton);
-        
     }
-    
-    
     
     public void moveOnMap(AppOnMap player,int x,int y){
         Scanner sc = new Scanner(System.in);
@@ -175,7 +178,7 @@ public class Game {
         return listProfiles;
     }
     
-public static void clrscr(){
+    public static void clrscr(){
     //Clears Screen in java
     try {
         if (System.getProperty("os.name").contains("Windows"))
@@ -184,7 +187,6 @@ public static void clrscr(){
             Runtime.getRuntime().exec("clear");
     } catch (IOException | InterruptedException ex) {}
 }
-
     
     public int initNewProfile (String name,Player p){
         String[] profile;
@@ -266,15 +268,15 @@ public static void clrscr(){
     
 
     }
-    
-    
-    
+
     public void writeSave(){
         this.currentMap.saveMap(this.profiles.get(this.currentProfile)[0]);
         saveProfile();
-        
 }
-
+    
+    public int[] getPlayer (){
+        return this.currentMap.getPlayer();
+    }
     
     public AppOnMap getEntity (int x,int y){
         return this.currentMap.getEntity(x,y);
@@ -289,6 +291,7 @@ public static void clrscr(){
     public void addElemMap (AppOnMap Elem, int x, int y){
         this.currentMap.addElemMap(Elem, x, y);
     }
+    
     public void changeElem (Integer x, Integer y, AppOnMap news){
         this.currentMap.changeElem(x,y,news);
     }
@@ -297,4 +300,233 @@ public static void clrscr(){
         this.currentMap.displayMap();
     }
     
+    public boolean interaction(){
+        int[] positionPlayer = getPlayer();
+        int x = positionPlayer[0];
+        int y = positionPlayer[1];
+        Scanner sc = new Scanner(System.in);
+        String str = sc.nextLine();
+        char move = str.charAt(0);
+        int buton = butonToInt(move);
+        AppOnMap player = getEntity(x,y);
+        String type = "";
+        AppOnMap destination = new AppOnMap();
+        if(buton == 4){type = "Inventory";}
+        else{
+            destination = entityOnDirection(x,y,buton);
+            type = destination.getClass().getSimpleName();
+        }
+        
+        switch (type){
+            case ("Mob"):
+                fight(player, destination);
+                if(player.isIsAlive()){
+                    destination.defeat(player);
+                    player.levelUp();
+                    this.currentMap.moveTo(x,y,buton);
+                    return true;
+                }
+                else{return false;}
+            case ("Trap"):
+                destination.setHide(false);
+                Trap tmp = createTrap(destination);
+                destination.traps(player);
+                this.currentMap.moveTo(x,y,buton);
+                changeElem(x,y,trapCurrentPosition);
+                this.trapCurrentPosition = tmp;
+                return player.isIsAlive();
+            case ("Chest"):
+                destination.open(player);
+                this.currentMap.moveTo(x,y,buton);
+                return true;
+            case("Merchant"):
+                commerce(player,destination);
+                return true;
+            case("Inventory"):
+                equip(player);
+                return true;
+            default:
+                if(destination.getDisplay() == new VoidCase().getDisplay()){
+                    this.currentMap.moveTo(x, y, buton);
+                }
+        }
+        return true;
+    }
+    
+    public AppOnMap entityOnDirection(int x, int y, Integer buton){
+            switch(buton){
+            case (0):
+                return getEntity(x,y-1);
+            case(1):
+                return getEntity(x-1,y);
+            case(2):
+                return getEntity(x,y+1);
+            case(3):
+                return getEntity(x+1,y);
+        }
+        return null;
+    }
+    
+    public static void fight(AppOnMap c1, AppOnMap c2){
+        Scanner sc = new Scanner(System.in);
+        c2.speak();
+        System.out.println("[Press any touch to continue]");
+        sc.nextLine();
+        ArrayList<AppOnMap> c = new ArrayList<>();
+        if(c1.getStats().getAgility() > c2.getStats().getAgility()){
+            c.add(c1);
+            c.add(c2);
+        }
+        if(c1.getStats().getAgility() > c2.getStats().getAgility()){
+            c.add(c2);
+            c.add(c1);
+        }
+        if(c1.getStats().getAgility() == c2.getStats().getAgility()){
+            c.add(c1);
+            c.add(c2);
+        }
+        System.out.println(c.get(0).getName() + "starts!");
+        int i = 0;
+        while (c.get(0).isIsAlive() && c.get(1).isIsAlive()){
+            System.out.println(c.get(i%2).getName() + ":" + c.get(i%2).getHealth() + " HP");
+            System.out.println(c.get((i+1)%2).getName() + ":" + c.get((i+1)%2).getHealth() + " HP");
+            c.get(i%2).attack(c.get((i+1)%2));
+            System.out.println(c.get(i%2).getName() + ":" + c.get(i%2).getHealth() + " HP");
+            System.out.println(c.get((i+1)%2).getName() + ":" + c.get((i+1)%2).getHealth() + " HP");
+            i++;
+        }
+    }
+    
+    public Trap createTrap(AppOnMap falseTrap){
+        int damage = falseTrap.getDamage();
+        boolean hide = falseTrap.isHide();
+        return new Trap(damage,hide);
+    }
+    
+    public void commerce(AppOnMap player, AppOnMap merchant){
+        merchant.speak();
+        Scanner sc = new Scanner(System.in);
+        char choice = ' ';
+        do{
+            System.out.println("What do you want to do?\nb)Buy\nSell\nq)Quit");
+            String str = sc.nextLine().toUpperCase();
+            char choice1 = (char)50;
+            char choice2 = (char)50;
+            ArrayList<Item> inventory = new ArrayList<>();
+            ArrayList<Integer> quantity = new ArrayList<>();
+            Inventory trade = null;
+            if(str.length() > 0){choice = str.charAt(0);}
+            while(choice != 'B' && choice != 'S' && choice != 'Q'){
+                str = sc.nextLine().toUpperCase();
+                if(str.length() > 0){choice = str.charAt(0);}
+            }
+            switch(choice){
+                case('B'):
+                    int lenB = merchant.getInventory().getInventory().size()-1;
+                    if(lenB == 0){
+                        System.out.println(merchant.getName() + " don't have any item to sell!  [PRESS any touch to continue]");
+                        sc.nextLine();
+                        return ;
+                    }
+                    int quantityMB = lenB;
+                    do{
+                        if(((int)choice1<49 && (int)choice1>49-lenB)||((int)choice2<49 && (int)choice2>49-quantityMB)){
+                            System.out.println("Please enter a number");
+                        }
+                        merchant.getInventory().display();
+                        System.out.println("What item do you want? (enter 1 for the first, 2 for the second and so on...)");
+
+                        str = sc.nextLine().toUpperCase();
+                        if(str.length() > 0){choice1 = str.charAt(0);}
+                        else{choice1 = ' ';}
+                        if((int)choice1<49 && (int)choice1>49-lenB){
+                            quantityMB = merchant.getInventory().getQuantity().get(choice1-49);
+                            System.out.println("In which quantity?");
+                            if(str.length() > 0){choice2 = str.charAt(0);}
+                            else{choice2 = ' ';}
+                        }
+                    }while(!((int)choice1>=49 && (int)choice1<=49-lenB && (int)choice2>=49 && (int)choice2<=49-quantityMB));
+                    inventory.add(merchant.getInventory().getInventory().get(choice1-49));
+                    quantity.add((int)choice2);
+                    trade = new Inventory(inventory,quantity,((int)choice2)*inventory.get(0).getPrice());
+                    merchant.sell(trade, player.getInventory());
+                case('S'):
+                    int lenS = player.getInventory().getInventory().size()-1;
+                    if(lenS == 0){
+                        System.out.println("You don't have any item to sell!  [PRESS any touch to continue]");
+                        sc.nextLine();
+                        return ;
+                    }
+                    int quantityMS = lenS;
+                    do{
+                        if(((int)choice1<49 && (int)choice1>49-lenS)||((int)choice2<49 && (int)choice2>49-quantityMS)){
+                            System.out.println("Please enter a number");
+                        }
+                        player.getInventory().display();
+                        System.out.println("What item do you want? (enter 1 for the first, 2 for the second and so on...)");
+
+                        str = sc.nextLine().toUpperCase();
+                        if(str.length() > 0){choice1 = str.charAt(0);}
+                        else{choice1 = ' ';}
+                        if((int)choice1<49 && (int)choice1>49-lenS){
+                            quantityMS = player.getInventory().getQuantity().get(choice1-49);
+                            System.out.println("In which quantity?");
+                            if(str.length() > 0){choice2 = str.charAt(0);}
+                            else{choice2 = ' ';}
+                        }
+                    }while(!((int)choice1>=49 && (int)choice1<=49-lenS && (int)choice2>=49 && (int)choice2<=49-quantityMS));
+
+                    inventory.add(merchant.getInventory().getInventory().get(choice1-49));
+                    quantity.add((int)choice2);
+                    trade = new Inventory(inventory,quantity,((int)choice2)*inventory.get(0).getPrice());
+                    merchant.buy(trade, player.getInventory());
+            }
+        }while(choice != 'Q');
+        System.out.println(merchant.getName() + ":See You !");
+        sc.nextLine();
+    }
+    
+    public void equip(AppOnMap player){
+        Scanner sc = new Scanner(System.in);
+        char choice = (char)50;
+        String str = "";
+        int len = player.getInventory().getInventory().size();
+        if(len == 0){
+            System.out.println("Your inventory is empty! [PRESS any touch to continue]");
+            sc.nextLine();
+            return ;
+        }
+        do{
+            player.getInventory().display();
+            if((int)choice<49 && (int)choice>49-len){
+                System.out.println("Please enter a number");
+            }
+            System.out.println("Which item do you want to equip? (Enter a number (1 for the first, 2 for the second, and so on...)");
+            str = sc.nextLine().toUpperCase();
+            if(str.length() == 0){choice = ' ';}
+        }while(!((int)choice>=49 && (int)choice<=49-len));
+        int item = choice-49;
+        int[] equip = player.getEquipment();
+        boolean can = true;
+        for(int i = 0 ; i<equip.length; i++){
+            if(equip[i] == item){
+                can = false;
+            }
+        }
+        if(!can){
+            System.out.println("You have already equipped this item! [PRESS any touch to continue]");
+            sc.nextLine();
+            return ;
+        }
+        for(int i = 0 ; i<equip.length; i++){
+            if(equip[i] == -1){
+                player.setOnePiece(item, i);
+                break;
+            }
+        }
+    }
+    
+    public void mainMenu(){
+        
+    }
 }

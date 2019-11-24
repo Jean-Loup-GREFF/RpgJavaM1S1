@@ -23,7 +23,8 @@ public class Trap extends AppOnMap implements DealsDamage{
         this.damage = damage;
         this.hide = hide;
     }
-    public void traps(Character target){
+    
+    public void traps(AppOnMap target){
         DealsDamage.dealsDamage(this.damage, target);
     }
 

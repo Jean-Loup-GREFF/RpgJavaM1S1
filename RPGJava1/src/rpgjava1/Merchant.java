@@ -25,12 +25,15 @@ public class Merchant extends Character implements Looting{
         super(name,level,health,healthM,stats,inventory,isAlive,display);
         this.tariffBuy = tariffBuy;
         this.tariffSell = tariffSell;
+        super.setStats(new Statistic(999,999,1,1,1,1,100));
     }
     public void buy(Inventory seller, Inventory trade){
+        trade.setGold((int)(this.tariffBuy * trade.getGold()));
         super.getInventory().setGold(super.getInventory().getGold() + trade.getGold());
         Looting.commerce(seller, trade, super.getInventory());
     }
     public void sell(Inventory trade, Inventory buyer){
+        trade.setGold((int)(this.tariffSell * trade.getGold()));
         Looting.commerce(super.getInventory(), trade, buyer);
     }
 
@@ -65,4 +68,10 @@ public class Merchant extends Character implements Looting{
         this.tariffSell = Double.parseDouble(save[2]);
         
     }
+
+    @Override
+    public void speak() {
+        System.out.println(super.getName() + ":Hi! Welcome here~~!");
+    }
+    
 }

@@ -88,5 +88,7 @@ public class Skill {
         this.specialPointCost = specialPointCost;
     }
     
-    
+    public void display(){
+        System.out.println(this.name);
+    }
 }

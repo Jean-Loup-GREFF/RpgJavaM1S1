@@ -101,6 +101,7 @@ public class Character extends AppOnMap implements DealsDamage{
     }
     
     public void attack(Character target){
+        System.out.println(super.getName() + " attacks !");
         DealsDamage.dealsDamage(stats.getStrenght(),target);
     }
     

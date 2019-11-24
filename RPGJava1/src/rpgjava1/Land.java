@@ -34,9 +34,7 @@ public class Land {
         this.elemMap = elemMap;
         this.map = map;
     }
-    
-    
-    
+ 
     public void InitMap(){
         this.name = new String();
         this.name = "";
@@ -84,7 +82,7 @@ public class Land {
     }
     
     public int[] getPlayer (){
-        
+
         Player p = new Player("");
         int n = 0, cx = 0 , cy = 0, x = -1, y = -1;
         for (int i= 0; i<this.elemMap.size(); i++){
@@ -142,14 +140,12 @@ public class Land {
         
     }
 
-    
     public Land(String name) {
         this.name = name;
         this.map = new ArrayList<>();
         this.elemMap = new ArrayList<>();
     }
-    
-    
+
     public void displayMap() {
         
         for (ArrayList<Integer> i : this.map){
@@ -171,8 +167,7 @@ public class Land {
             
         }
     }
-    
-    
+
     public String getName() {
         return name;
     }
@@ -760,5 +755,4 @@ public class Land {
             
         }
     }
-    
 }
