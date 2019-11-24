@@ -154,7 +154,18 @@ public class Land {
         
         for (ArrayList<Integer> i : this.map){
             for (Integer j : i){
-                System.out.print(this.elemMap.get(j).getDisplay());
+                if (this.elemMap.get(j).getDisplay() == '+'){
+                    if (this.elemMap.get(j).isHide()){
+                        System.out.print(" ");
+                    }
+                    else{
+                    System.out.print(this.elemMap.get(j).getDisplay());    
+                    }
+                }
+                else{
+                    System.out.print(this.elemMap.get(j).getDisplay());
+                }
+                
             }
             System.out.println();
             
@@ -262,23 +273,34 @@ public class Land {
         ArrayList<ArrayList<Integer>> map;
         ArrayList<Integer> linemap;
         AppOnMap elem;
+        
         int testNamemap = 0;
         int lenObjectLine;
         int i, j;
         map = new ArrayList<>();
         linemap = new ArrayList<>();
-        elem = new AppOnMap();
-        Character cha = new Character("");
-        Player play = new Player(""); 
+        
+        
+        
         int n = 0;
         
         while ((line = buff.readLine())!=null){
-          
+                
                 objects = line.split(";");
                 lenObjectLine = objects.length;
                 linemap = new ArrayList<>();
                 
                 for (i = 0; i < lenObjectLine; i++){
+                    
+                    
+                    elem = new AppOnMap();
+                    Character cha = new Character("");
+                    Player play = new Player(""); 
+                    Trap trap = new Trap();
+                    Mob mob = new Mob();
+                    Merchant merchant = new Merchant();
+                    Chest chest = new Chest();
+                    
                     elem = new AppOnMap();
                     type = objects[i].split(",");
                     j = type.length;
@@ -293,7 +315,30 @@ public class Land {
                                 n = this.posElem(elem);
                             }
                             break;
-                            
+                        case 2:
+                            chest.InitFromSave(type);
+                            if (! isElem(chest)){
+                                
+                                n = this.elemMap.size();
+                                this.elemMap.add(chest);
+                                
+                            }
+                            else{
+                                n = this.posElem(trap);
+                            }
+                            break;
+                        case 3:
+                            trap.InitFromSave(type);
+                            if (! isElem(trap)){
+                                
+                                n = this.elemMap.size();
+                                this.elemMap.add(trap);
+                                
+                            }
+                            else{
+                                n = this.posElem(trap);
+                            }
+                            break;
                         case 8:
                             cha.InitFromSave(type);
                             if (! isElem(cha)){
@@ -317,6 +362,31 @@ public class Land {
                             else{
                                 n = this.posElem(play);
                             }
+                            break;
+                        case 13:
+                            mob.InitFromSave(type);
+                            if (! isElem(mob)){
+                                
+                                n = this.elemMap.size();
+                                this.elemMap.add(mob);
+                                
+                            }
+                            else{
+                                n = this.posElem(mob);
+                            }
+                            break;
+                        case 14:
+                            merchant.InitFromSave(type);
+                            if (! isElem(merchant)){
+                                
+                                n = this.elemMap.size();
+                                this.elemMap.add(merchant);
+                                
+                            }
+                            else{
+                                n = this.posElem(merchant);
+                            }
+                            break;           
                         
                     }
                     linemap.add(n);
@@ -350,14 +420,15 @@ public class Land {
         ArrayList<ArrayList<Integer>> map;
         ArrayList<Integer> linemap;
         AppOnMap elem;
+        
         int testNamemap = 0;
         int lenObjectLine;
         int i, j;
+        
         map = new ArrayList<>();
         linemap = new ArrayList<>();
-        elem = new AppOnMap();
-        Character cha = new Character("");
-        Player play = new Player(""); 
+        
+        
         int n = 0;
         
         while ((line = buff.readLine())!=null){
@@ -368,6 +439,12 @@ public class Land {
                 
                 for (i = 0; i < lenObjectLine; i++){
                     elem = new AppOnMap();
+                    Character cha = new Character("");
+                    Player play = new Player(""); 
+                    Trap trap = new Trap();
+                    Mob mob = new Mob();
+                    Merchant merchant = new Merchant();
+                    Chest chest = new Chest();
                     type = objects[i].split(",");
                     j = type.length;
                     switch(j){
@@ -381,7 +458,30 @@ public class Land {
                                 n = this.posElem(elem);
                             }
                             break;
-                            
+                        case 2:
+                            chest.InitFromSave(type);
+                            if (! isElem(chest)){
+                                
+                                n = this.elemMap.size();
+                                this.elemMap.add(chest);
+                                
+                            }
+                            else{
+                                n = this.posElem(trap);
+                            }
+                            break;
+                        case 3:
+                            trap.InitFromSave(type);
+                            if (! isElem(trap)){
+                                
+                                n = this.elemMap.size();
+                                this.elemMap.add(trap);
+                                
+                            }
+                            else{
+                                n = this.posElem(trap);
+                            }
+                            break;
                         case 8:
                             cha.InitFromSave(type);
                             if (! isElem(cha)){
@@ -405,6 +505,31 @@ public class Land {
                             else{
                                 n = this.posElem(play);
                             }
+                            break;
+                        case 13:
+                            mob.InitFromSave(type);
+                            if (! isElem(mob)){
+                                
+                                n = this.elemMap.size();
+                                this.elemMap.add(mob);
+                                
+                            }
+                            else{
+                                n = this.posElem(mob);
+                            }
+                            break;
+                        case 14:
+                            merchant.InitFromSave(type);
+                            if (! isElem(merchant)){
+                                
+                                n = this.elemMap.size();
+                                this.elemMap.add(merchant);
+                                
+                            }
+                            else{
+                                n = this.posElem(merchant);
+                            }
+                            break;           
                         
                     }
                     linemap.add(n);
@@ -413,6 +538,7 @@ public class Land {
                     
                     this.map.add(linemap);
                 
+        
         }
         //this.InitMap(map,namemap);
        

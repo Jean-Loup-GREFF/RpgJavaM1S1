@@ -42,5 +42,20 @@ public class Trap extends AppOnMap implements DealsDamage{
     public void setHide(boolean hide) {
         this.hide = hide;
     }
+    public String getSaveText(){
+        
+        String save = "";
+        save += this.hide + ",";
+        save += this.damage + ",";
+        
+        return save + super.getSaveText();
+    }
+    
+    public void InitFromSave(String[] save){
+        super.InitFromSave(save[2]);
+        this.hide = Boolean.parseBoolean(save[0]);
+        this.damage = Integer.parseInt(save[1]);
+        
+    }
     
 }

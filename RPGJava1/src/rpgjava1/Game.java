@@ -53,8 +53,7 @@ public class Game {
         String line;
         while ((line = buff.readLine())!=null){
             this.profiles.add(line.split(" "));
-            
-            
+            String[] l = line.split(" ");
         }
         
         buff.close();
@@ -187,23 +186,28 @@ public static void clrscr(){
 }
 
     
-    public void initNewProfile (String name){
+    public int initNewProfile (String name,Player p){
         String[] profile;
         profile = new String[2];
         profile[0] = name;
         profile[1] = this.currentMap.getName();
         this.initProfiles();
+        int test = 0;
         //this.currentMap.initMapFromSave("init", "Twilight's_Castle");
         //profile[1] = currentMap.getName();
-        if (this.initCurrentProfileFromSave(name,"1")==1){
-            this.profiles = new ArrayList<>();
-            String[] test ={name, "1"};
-            currentProfile = 0;
-            this.currentMap.initMapFromSave(name, "1");
-            profile[1] = "1";
-            this.profiles.add(test);
+        if (this.initCurrentProfileFromSave(name,"Twilight'sCastle")==1){
+            currentProfile = this.profiles.size();
+            this.currentMap.initFirstMapFromSave(name);
+            profile[0] = name;
+            profile[1] = this.currentMap.getName();
+            this.profiles.add(profile);
+            this.currentMap.changeElem(18,8,p);
             }
-        System.out.println(this.currentProfile + " " + this.profiles.get(0)[0] + " " + this.profiles.get(0)[1]);
+        else {
+            test = 1;
+            System.out.println('A');
+        }
+        return test;
     }
     
     public int initCurrentProfileFromSave(String name, String name2){
@@ -212,9 +216,10 @@ public static void clrscr(){
         int n = 0;
         int test = 1;
         this.initProfiles();
+        String [] names = {name, name2};
         int aie = profiles.size();
         for (String[] i: this.profiles){
-            if (i [0] == name){
+            if (i[0].equals(name)){
                 this.currentProfile = n;
                 test = 0;
                 
@@ -269,9 +274,7 @@ public static void clrscr(){
         saveProfile();
         
 }
-    public AppOnMap getPlayer (){
-        return this.currentMap.getPlayer();
-    }
+
     
     public AppOnMap getEntity (int x,int y){
         return this.currentMap.getEntity(x,y);
