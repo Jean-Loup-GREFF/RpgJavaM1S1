@@ -22,8 +22,4 @@ public class Wall extends AppOnMap{
     public char getDisplay(){
         return super.getDisplay();
     }
-    
-    
-    
-      
 }

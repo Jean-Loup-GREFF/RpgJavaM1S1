@@ -35,7 +35,7 @@ public interface Looting {
      * @param dealer
      * @param getter
      */
-    static void loot(Inventory dealer,Character getter){
+    static void loot(Inventory dealer,AppOnMap getter){
         getter.getInventory().setGold(dealer.getGold()
                 + getter.getInventory().getGold());
         loopAddItems(dealer,getter.getInventory());
@@ -50,8 +50,8 @@ public interface Looting {
     static void loopAddItems(Inventory dealer, Inventory getter){
         int len = dealer.getInventory().size();
         for(int i = 0;i<len;i++){
-            getter.add(dealer.getInventory().get(i),
-                    dealer.getQuantity().get(i));
+            getter.add(
+                    dealer.getInventory().get(i), dealer.getQuantity().get(i));
         }
     }
 
@@ -64,7 +64,8 @@ public interface Looting {
     static void loopRemoveItems(Inventory remover, Inventory target){
         int len = remover.getInventory().size();
         for(int i = 0;i<len;i++){
-            target.remove(remover.getInventory().get(i), remover.getQuantity().get(i));
+            target.remove(
+                    remover.getInventory().get(i),remover.getQuantity().get(i));
         }
     }
 }

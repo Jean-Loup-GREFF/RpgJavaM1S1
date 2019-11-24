@@ -182,8 +182,6 @@ public class Item {
         save += this.price + "%";
         save += this.stats.getSaveTextStat() + "%";
         save += this.description;
-        
         return save;
-        
     }
 }

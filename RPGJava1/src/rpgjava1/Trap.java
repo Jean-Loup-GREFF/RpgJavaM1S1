@@ -86,6 +86,4 @@ public class Trap extends AppOnMap implements DealsDamage{
         this.damage = Integer.parseInt(save[1]);
         
     }
-    
-    
 }

@@ -38,7 +38,7 @@ public class Chest extends AppOnMap implements Looting{
      * @param getter
      * object which will get the loot
      */
-    public void open(Character getter){
+    public void open(AppOnMap getter){
         Looting.loot(this.inventory, getter);
     }
 

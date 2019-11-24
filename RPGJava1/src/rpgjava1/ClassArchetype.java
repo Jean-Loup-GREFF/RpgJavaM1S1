@@ -120,9 +120,9 @@ public abstract class ClassArchetype implements DealsDamage{
      *
      */
     public void displaySkill(){
-        char[] touch = {'A','Z','E','R','R'};
+        String[] touch = {"A","Z","E","R","T"};
         for(int i = 0;i<this.skills.size();i++){
-            System.out.print(touch[i] + ' ');
+            System.out.print(touch[i] + " ");
             skills.get(i).display();
         }
     }

@@ -24,7 +24,7 @@ public class Player extends Character implements DealsDamage{
      * @param name
      */
     public Player(String name){
-        super(name);
+        super(name, '@');
         this.exp = 0;
         this.expM = 0;
         this.archetype = new ClasslessClass();
@@ -121,26 +121,26 @@ public class Player extends Character implements DealsDamage{
 
     @Override
     public int levelUp(){
+        System.out.println("You level up!");
         int level = super.getLevel();
         if(this.exp >= level*10){
             this.setExp(this.exp - level*10);
             super.setLevel(level + 1);
             super.setStats(super.getStats().add(this.archetype.getStatsGrow()));
         }
-        this.levelUp();
         return 0;
     }
     
     @Override
     public void setOnePiece(int piece, int position){
         this.equipment[piece] = position;
-        super.setStats(super.getStats().add(super.getInventory().getInventory()
-                .get(piece).getStats()));
+        super.setStats(
+                super.getStats().add(
+                        super.getInventory().getInventory()
+                                .get(piece).getStats()));
     }
 
-    @Override
-    public void attack(Character target){
-        Scanner keyboard = new Scanner(System.in);
+    public void attack(AppOnMap target, Scanner keyboard){
         String choice = "";
         boolean use = false;
         do{
@@ -193,9 +193,12 @@ public class Player extends Character implements DealsDamage{
                     System.out.println(super.getName() + " inflicts " + damage);
                     use = true;
                     break;
+                default:
+                    System.out.println("Please enter a correct letter! ");
             }
     }while(!use);
 }
+    
     public String getSaveText(){
         String save;
         save = super.getSaveText();
@@ -224,11 +227,9 @@ public class Player extends Character implements DealsDamage{
                 save += ":";
             }
         }
-        
         return save;
     }
     
-    @SuppressWarnings("empty-statement")
     public void InitFromSave(String[] save){
         String[] save1 = {save[0],save[1],save[2],save[3],save[4],save[5],
             save[6],save[7]};
