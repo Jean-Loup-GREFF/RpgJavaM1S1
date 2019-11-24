@@ -201,6 +201,8 @@ public class Land {
                     temp = this.elemMap.get(this.map.get(y).get(x));
                     changeElem (x, y, game.getTrapCurrentPosition());
                     changeElem (x, y-1, temp);
+                    String[] nprof = game.getProfileUse();
+                    game.setProfiles(game.getCurrentProfile(), nprof);
                     game.setTrapCurrentPosition(null);
                 }
                 break;

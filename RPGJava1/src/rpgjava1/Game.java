@@ -15,7 +15,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 
 
@@ -160,7 +162,7 @@ public class Game {
     
     public void moveOnMapTest (int x, int y, char move){
         int buton = butonToInt(move);
-        this.currentMap.moveTo(x,y,buton);
+        this.currentMap.moveTo(x,y,buton,this);
     }
     
     public void moveOnMap(AppOnMap player,int x,int y){
@@ -346,21 +348,28 @@ public class Game {
                 if(player.isIsAlive()){
                     destination.defeat(player);
                     player.levelUp();
-                    this.currentMap.moveTo(x,y,buton);
+                    this.currentMap.moveTo(x,y,buton,this);
                     return true;
                 }
                 else{return false;}
             case ("Trap"):
                 destination.setHide(false);
                 Trap tmp = createTrap(destination);
+                this.trapCurrentPosition = tmp;
+                
+                String[] profwithtrap = {
+                    this.profiles.get(this.currentProfile)[0],
+                        this.profiles.get(this.currentProfile)[1], 
+                        this.trapCurrentPosition.getSaveText()}; 
+                this.profiles.set(this.currentProfile,profwithtrap);
                 destination.traps(player);
-                this.currentMap.moveTo(x,y,buton);
+                this.currentMap.moveTo(x,y,buton,this);
                 changeElem(x,y,trapCurrentPosition);
                 this.trapCurrentPosition = tmp;
                 return player.isIsAlive();
             case ("Chest"):
                 destination.open(player);
-                this.currentMap.moveTo(x,y,buton);
+                this.currentMap.moveTo(x,y,buton,this);
                 return true;
             case("Merchant"):
                 commerce(player,destination);
@@ -370,7 +379,7 @@ public class Game {
                 return true;
             default:
                 if(destination.getDisplay() == new VoidCase().getDisplay()){
-                    this.currentMap.moveTo(x, y, buton);
+                    this.currentMap.moveTo(x, y, buton,this);
                 }
         }
         return true;
@@ -547,6 +556,15 @@ public class Game {
                 break;
             }
         }
+    }
+    
+    public int getCurrentProfile(){
+        return this.currentProfile;
+    }
+    
+    public void setProfiles(int i, String[] nprofile){
+        this.profiles.set(i,nprofile);
+        
     }
     
     public void mainMenu(){
