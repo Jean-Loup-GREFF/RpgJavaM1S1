@@ -8,15 +8,10 @@ package rpgjava1;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 public class Land {
     private String name;
@@ -86,12 +81,14 @@ public class Land {
         Player p = new Player("");
         int n = 0, cx = 0 , cy = 0, x = -1, y = -1;
         for (int i= 0; i<this.elemMap.size(); i++){
-            if (this.elemMap.get(i).getDisplay() == p.getDisplay()){
+            if ((""+this.elemMap.get(i).getDisplay()).equals(""+p.getDisplay())){
                 break;
             }
             n++;
         }
+        
         for (ArrayList<Integer> Y : this.map){
+            cx = 0;
             for (int X : Y){
                 if (X == n){
                     x = cx;
@@ -147,10 +144,10 @@ public class Land {
     }
 
     public void displayMap() {
-        
+        int n = 0;
         for (ArrayList<Integer> i : this.map){
             for (Integer j : i){
-                if (this.elemMap.get(j).getDisplay() == '+'){
+                if ((""+this.elemMap.get(j).getDisplay()).equals("+")){
                     if (this.elemMap.get(j).isHide()){
                         System.out.print(" ");
                     }
@@ -161,10 +158,9 @@ public class Land {
                 else{
                     System.out.print(this.elemMap.get(j).getDisplay());
                 }
-                
             }
             System.out.println();
-            
+            n++;
         }
     }
 
@@ -173,12 +169,12 @@ public class Land {
     }
     
     public void changeElem (Integer x, Integer y, AppOnMap news){
-                if(!this.elemMap.contains(news)){
+                if(!this.isElem(news)){
                     this.map.get(y).set(x,this.elemMap.size());
                     this.elemMap.add(news);
                 }
                 else{
-                    this.map.get(y).set(x,this.elemMap.indexOf(news));
+                    this.map.get(y).set(x,this.posElem(news));
                 }
     }
     
@@ -187,8 +183,6 @@ public class Land {
         VoidCase voids = new VoidCase();
         int test = 1;
         AppOnMap temp = new AppOnMap();
-        
-        
         
         switch(buton){
             case (0):
@@ -245,8 +239,6 @@ public class Land {
                     game.setTrapCurrentPosition(null);
                 }
                 break;
-            
-            
         }
         boolean a = (this.elemMap.get(this.map.get(y-1).get(x)) == voids);        
         return test;
@@ -294,16 +286,13 @@ public class Land {
         int n = 0;
         
         while ((line = buff.readLine())!=null){
-                
                 objects = line.split(";");
                 lenObjectLine = objects.length;
                 linemap = new ArrayList<>();
                 
                 for (i = 0; i < lenObjectLine; i++){
-                    
-                    
                     elem = new AppOnMap();
-                    Character cha = new Character("");
+                    Character cha = new Character("",'.');
                     Player play = new Player(""); 
                     Trap trap = new Trap();
                     Mob mob = new Mob();
@@ -398,10 +387,10 @@ public class Land {
                             break;           
                         
                     }
+                    
                     linemap.add(n);
                     //linemap.add(elem);
                     }
-                    
                     this.map.add(linemap);
                 
         }
@@ -448,7 +437,7 @@ public class Land {
                 
                 for (i = 0; i < lenObjectLine; i++){
                     elem = new AppOnMap();
-                    Character cha = new Character("");
+                    Character cha = new Character("", '.');
                     Player play = new Player(""); 
                     Trap trap = new Trap();
                     Mob mob = new Mob();
@@ -533,7 +522,6 @@ public class Land {
                                 
                                 n = this.elemMap.size();
                                 this.elemMap.add(merchant);
-                                
                             }
                             else{
                                 n = this.posElem(merchant);
@@ -561,7 +549,7 @@ public class Land {
     public int posElem (AppOnMap Elem){
         int n = 0;
         for(AppOnMap j: this.elemMap){
-            if (Elem == j){
+            if ((""+Elem.getDisplay()).equals((""+j.getDisplay()))){
                 break;
             }
             n++;
@@ -572,7 +560,7 @@ public class Land {
     public boolean isElem (AppOnMap Elem){
         boolean test = false;
         for(AppOnMap j: this.elemMap){
-            if (Elem == j){
+            if ((""+Elem.getDisplay()).equals((""+j.getDisplay()))){
                 test = true;
                 break;
             }
@@ -593,8 +581,6 @@ public class Land {
         int test = 1;
         int limitLine = 0;
         
-        
-        
         ff.createNewFile();
         FileWriter ffw = new FileWriter(ff);
         
@@ -614,11 +600,10 @@ public class Land {
                     ffw.write("\n");
                 }
                 test ++;
-                }
             }
-        
+        }
         ffw.close(); // fermer le fichier à la fin des traitements
-        } 
+        }
         catch (Exception e) {}
     
 }
