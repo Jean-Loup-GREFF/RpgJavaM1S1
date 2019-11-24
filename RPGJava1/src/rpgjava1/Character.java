@@ -23,6 +23,7 @@ public class Character extends AppOnMap implements DealsDamage{
      *
      * @param name
      * name you want to give to your character object
+     * @param display
      */
     public Character(String name, char display){
         super(display);
