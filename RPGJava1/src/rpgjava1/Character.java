@@ -24,12 +24,12 @@ public class Character extends AppOnMap implements DealsDamage{
      * @param name
      * name you want to give to your character object
      */
-    public Character(String name){
-        super();
+    public Character(String name, char display){
+        super(display);
         this.name = name;
         this.level = 1;
-        this.health = 10;
-        this.healthM = 10;
+        this.health = 15;
+        this.healthM = 15;
         this.stats = new Statistic();
         this.inventory = new Inventory();
         this.isAlive = true;
