@@ -18,6 +18,7 @@ import java.util.Scanner;
 
 
 /**
+ * Principal Class of the Game
  * 
  * @author Matthieu
  */
@@ -28,6 +29,11 @@ public class Game {
     private char up, down, left, right;
     private Trap trapCurrentPosition;
 
+    /**
+     * Create a simple instance of the game
+     * You need to create one to play
+     * Then call mainMenu
+     */
     public Game(){
         this.currentMap = new Land();
         this.profiles = new ArrayList<>();
@@ -38,6 +44,16 @@ public class Game {
         this.trapCurrentPosition = null;
     }
     
+    /**
+     * Create a complete instance of Game
+     * 
+     * @param currentMap
+     * the map of the Land
+     * @param profiles
+     * the list of all the profiles saved on the computer
+     * @param currentProfile
+     * actual profile use to play
+     */
     public Game(Land currentMap, ArrayList<String[]> profiles, 
             int currentProfile) {
         this.currentMap = currentMap;
@@ -46,14 +62,29 @@ public class Game {
         this.trapCurrentPosition = null;
     }
 
+    /**
+     * 
+     * 
+     * @return 
+     * the actual Trap present on the same case as the player
+     */
     public Trap getTrapCurrentPosition() {
         return trapCurrentPosition;
     }
 
+    /**
+     *
+     * @param trapCurrentPosition
+     * the actual Trap present on the same case as the player
+     */
     public void setTrapCurrentPosition(Trap trapCurrentPosition) {
         this.trapCurrentPosition = trapCurrentPosition;
     }
     
+    /**
+     * collect all profiles save on the computer
+     * 
+     */
     public void initProfiles() {
         
         try{
@@ -77,6 +108,10 @@ public class Game {
     
 }
     
+    /**
+     * Allow to modify the link between a key and a action in the game
+     * 
+     */
     public void modifyButonsMov(){
         try{
             Scanner sc = new Scanner(System.in);
@@ -133,6 +168,14 @@ public class Game {
         }
     }
     
+    /**
+     * Transform a char from a key press on the keybord in a instruction
+     * 
+     * @param move
+     * the key pressed by the user
+     * @return
+     * the conversion of the key pressed by the user
+     */
     public int butonToInt (char move){
             int ret = -1;
         try{
@@ -171,6 +214,11 @@ public class Game {
         
     }
     
+    /**
+     *
+     * @return
+     * All the profiles save on the computer
+     */
     public ArrayList<String>  getProfiles (){
         ArrayList<String> listProfiles;
         listProfiles = new ArrayList<>();
@@ -182,6 +230,10 @@ public class Game {
         return listProfiles;
     }
     
+    /**
+     * clear the console on the Windows's console
+     *
+     */
     public static void clrscr(){
     //Clears Screen in java
     try {
@@ -192,6 +244,17 @@ public class Game {
     } catch (IOException | InterruptedException ex) {}
     }
     
+    /**
+     * Initialize a New profile from the name of the player
+     * and the player object
+     *
+     * @param name
+     * the name of the new profile
+     * @param p
+     * the Object Player created
+     * @return 
+     * 0 if no problem else 1
+     */
     public int initNewProfile (String name,Player p){
         String[] profile;
         profile = new String[2];
@@ -217,6 +280,13 @@ public class Game {
         return test;
     }
     
+    /**
+     * test if the name is already use
+     *
+     * @param name
+     * the name we need to test to verify his unicity
+     * @return 
+     */
     public int testNameNewProfile (String name){
         this.currentMap = new Land();
         this.profiles = new ArrayList<>();
@@ -233,6 +303,14 @@ public class Game {
         return test;
     }
     
+    /**
+     * Initialize the profile from the save in the computer
+     *
+     * @param name
+     * the name of the profile we want to load from the computer
+     * @return
+     * 0 if no problem else 1
+     */
     public int initCurrentProfileFromSave(String name){
         this.currentMap = new Land();
         this.profiles = new ArrayList<>();
@@ -258,6 +336,10 @@ public class Game {
         return test;
     }
     
+    /**
+     * save the profile in the computer
+     *
+     */
     public void saveProfile(){
         try{
         String dirName = "profiles\\";
@@ -292,19 +374,40 @@ public class Game {
 
     }
 
+    /**
+     * save the map and the profile on the computer
+     *
+     */
     public void writeSave(){
         this.currentMap.saveMap(this.profiles.get(this.currentProfile)[0]);
         saveProfile();
 }
     
+    /**
+     * give the position of the Player on the map
+     *
+     * @return the position of the player on the currentMap
+     */
     public int[] getPlayer (){
         return this.currentMap.getPlayer();
     }
     
+    /**
+     * return the Entity(AppOnMap) presents on position (x,y)
+     *
+     * @param x
+     * @param y
+     * @return
+     */
     public AppOnMap getEntity (int x,int y){
         return this.currentMap.getEntity(x,y);
     }
     
+    /**
+     *
+     * @param newMap
+     * the new Map on which we want to play
+     */
     public void changeMap (String newMap){
         this.currentMap.saveMap(this.profiles.get(this.currentProfile)[0]);
         this.currentMap.initMapFromSave(
@@ -312,14 +415,32 @@ public class Game {
         this.profiles.get(this.currentProfile)[1] = this.currentMap.getName();
     }
     
+    /**
+     *
+     * @param Elem
+     * the new AppOnMap we want to add on the Map
+     * @param x
+     * coordinate(colums) on which
+     * @param y
+     */
     public void addElemMap (AppOnMap Elem, int x, int y){
         this.currentMap.addElemMap(Elem, x, y);
     }
     
+    /**
+     *
+     * @param x
+     * @param y
+     * @param news
+     */
     public void changeElem (Integer x, Integer y, AppOnMap news){
         this.currentMap.changeElem(x,y,news);
     }
     
+    /**
+     * display the map and the instruction to play
+     *
+     */
     public void displayMap (){
         this.currentMap.displayMap();
         System.out.println("What do you want to do?");
@@ -327,6 +448,12 @@ public class Game {
                 + "\n(Z)Up/(Q)Left/(S)Down/(D)Right");
     }
     
+    /**
+     * gestion of the interaction between the player and the other AppOnMap
+     *
+     * @param st
+     * @return
+     */
     public boolean interaction(Scanner st){
         int[] positionPlayer = getPlayer();
         int x = positionPlayer[0];
@@ -439,6 +566,16 @@ public class Game {
         return true;
     }
     
+    /**
+     * return the Entity (AppOnMap) present
+     * on the case next to the chosen position (x,y)
+     * in the direction chose by buton
+     *
+     * @param x
+     * @param y
+     * @param buton
+     * @return
+     */
     public AppOnMap entityOnDirection(int x, int y, Integer buton){
             switch(buton){
             case (0):
@@ -453,6 +590,13 @@ public class Game {
         return null;
     }
     
+    /**
+     * Display and realise the fight between two AppOnMaps
+     *
+     * @param c1
+     * @param c2
+     * @param sc
+     */
     public void fight(AppOnMap c1, AppOnMap c2, Scanner sc){
         clrscr();
         c2.speak();
@@ -490,15 +634,30 @@ public class Game {
         }
     }
     
+    /**
+     * Copy the pseudo-Trap give as parameters in a real Trap
+     *
+     * @param falseTrap
+     * @return
+     */
     public Trap createTrap(AppOnMap falseTrap){
         int damage = falseTrap.getDamage();
         boolean hide = falseTrap.isHide();
         return new Trap(damage,hide);
     }
     
+    /**
+     * display and realise the exchange between two AppOnMapss
+     *
+     * @param player
+     * @param merchant
+     * @param sc
+     */
     public void commerce(AppOnMap player, AppOnMap merchant, Scanner sc){
         merchant.speak();
-        char choice = ' ';
+        System.out.println("I'm sorry, but I cab't sell or buy anything");
+        sc.nextLine();
+        /*char choice = ' ';
         do{
             System.out.println("What do you want to do?\n(B)uy\n(S)ell\n(Q)uit");
             String str = sc.nextLine().toUpperCase();
@@ -616,9 +775,15 @@ public class Game {
             }
         }while(choice != 'Q');
         System.out.println(merchant.getName() + ":See You !");
-        sc.nextLine();
+        sc.nextLine();*/
     }
     
+    /**
+     * display and realise the inventory of the player
+     * 
+     * @param player
+     * @param sc
+     */
     public void equip(AppOnMap player, Scanner sc){
         int choice = -1;
         boolean valid = false;
@@ -670,18 +835,37 @@ public class Game {
         }
     }
     
+    /**
+     *
+     * @return
+     */
     public int getCurrentProfile(){
         return this.currentProfile;
     }
     
+    /**
+     *
+     * @param i
+     * @param nprofile
+     */
     public void setProfiles(int i, String[] nprofile){
         this.profiles.set(i,nprofile);
     }
     
+    /**
+     *
+     * @return
+     */
     public String[] getProfileUse(){
         return this.profiles.get(currentProfile);
     }
     
+    /**
+     * display and realise the main menu of the game
+     * such as new game, load game
+     *
+     * @param sc
+     */
     public void mainMenu(Scanner sc){
         String strchoice = "";
         String str = "";
@@ -780,7 +964,7 @@ public class Game {
             default:
                 return ;
         }
-        ArrayList<Item> in = new ArrayList<>();
+        /*ArrayList<Item> in = new ArrayList<>();
         ArrayList<Integer> q = new ArrayList<>();
         in.add(new Item("Ring",Rarity.COMMUN,50,new Statistic(),"A_ring"));
         q.add(1);
@@ -800,7 +984,7 @@ public class Game {
         qua.add(1);
         Inventory inventor = new Inventory(inve,qua,100);
         Mob mob = new Mob("monster",1,20,20,new Statistic(),inventor,true,'m',25);
-        this.currentMap.changeElem(8,2,mob);
+        this.currentMap.changeElem(8,2,mob);*/
         
         do{
             clrscr();
@@ -808,6 +992,13 @@ public class Game {
         }while(this.interaction(sc));
     }
     
+    /**
+     * test if several character are present individually in a String
+     *
+     * @param str
+     * @param chars
+     * @return
+     */
     public boolean contains(String str, String chars){
         int len = chars.length();
         for(int i = 0; i<len; i++){

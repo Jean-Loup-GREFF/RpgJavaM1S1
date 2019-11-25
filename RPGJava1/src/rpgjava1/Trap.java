@@ -42,6 +42,7 @@ public class Trap extends AppOnMap implements DealsDamage{
      */
     @Override
     public void traps(AppOnMap target){
+        System.out.println("You take " + this.damage + " damages.");
         DealsDamage.dealsDamage(this.damage, target);
     }
 
