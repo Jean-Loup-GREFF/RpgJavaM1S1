@@ -220,7 +220,7 @@ public class Character extends AppOnMap implements DealsDamage{
         
         this.stats.InitFromSaveStat(save[4].split("/"));
         
-        this.inventory.InitFromSave(save[5].split("$"));
+        this.inventory.InitFromSave(save[5].split("!"));
         
         this.isAlive = Boolean.parseBoolean(save[6]);
         

@@ -485,6 +485,7 @@ public class Game {
                 fight(player, destination,st);
                 clrscr();
                 if(player.isIsAlive()){
+                    System.out.println(destination.getInventory().getSaveTextInv());
                     destination.defeat(player);
                     player.levelUp();
                     this.currentMap.moveTo(x,y,buton, this);

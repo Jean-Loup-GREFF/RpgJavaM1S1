@@ -73,7 +73,7 @@ public class Chest extends AppOnMap implements Looting{
      */
     public void InitFromSave(String[] save){
         
-        this.inventory.InitFromSave(save[0].split("$"));
+        this.inventory.InitFromSave(save[0].split("!"));
         super.InitFromSave(save[1]);
         
     }

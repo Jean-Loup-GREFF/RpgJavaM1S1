@@ -219,7 +219,7 @@ public class Inventory {
             }
         }
         if (this.inventory.size() > 0){
-            save += "$";
+            save += "!";
         }
         return save += this.gold;
     }

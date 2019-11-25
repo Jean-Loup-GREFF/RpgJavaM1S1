@@ -237,7 +237,7 @@ public class Statistic {
         String save = "";
         save += this.strenght + "/" + this.vitality + "/" + this.dexterity + "/"
                 + this.agility + "/" + this.intelligence + "/" + this.wisdom
-                + "/" + this.luck + "/";
+                + "/" + this.luck;
         return save;
     }
     

@@ -167,6 +167,7 @@ public class Item {
         }
         this.price = Integer.parseInt(save[2]);
         this.stats.InitFromSaveStat(save[3].split("/"));
+        this.description = save[4];
     }
     
     /**

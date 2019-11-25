@@ -460,7 +460,7 @@ public class Land {
                                 n = this.posElem(play);
                             }
                             break;
-                        case 13:
+                        case 9:
                             mob.InitFromSave(type);
                             if (! isElem(mob)){
                                 
@@ -472,7 +472,7 @@ public class Land {
                                 n = this.posElem(mob);
                             }
                             break;
-                        case 14:
+                        case 10:
                             merchant.InitFromSave(type);
                             if (! isElem(merchant)){
                                 
@@ -513,8 +513,7 @@ public class Land {
         this.map = new ArrayList<>();
         this.elemMap = new ArrayList<>();
         try{
-        InputStream flux = new FileInputStream("save"+nameProf+"\\"
-                + this.name +".txt"); 
+        InputStream flux = new FileInputStream("save\\"+nameProf+"\\"+ this.name +".txt"); 
         InputStreamReader lecture=new InputStreamReader(flux);
         BufferedReader buff=new BufferedReader(lecture);
         String line;
@@ -531,11 +530,9 @@ public class Land {
         map = new ArrayList<>();
         linemap = new ArrayList<>();
         
-        
         int n = 0;
         
         while ((line = buff.readLine())!=null){
-          
                 objects = line.split(";");
                 lenObjectLine = objects.length;
                 linemap = new ArrayList<>();
@@ -613,22 +610,19 @@ public class Land {
                                 n = this.posElem(play);
                             }
                             break;
-                        case 13:
+                        case 9:
                             mob.InitFromSave(type);
                             if (! isElem(mob)){
-                                
                                 n = this.elemMap.size();
                                 this.elemMap.add(mob);
-                                
                             }
                             else{
                                 n = this.posElem(mob);
                             }
                             break;
-                        case 14:
+                        case 10:
                             merchant.InitFromSave(type);
                             if (! isElem(merchant)){
-                                
                                 n = this.elemMap.size();
                                 this.elemMap.add(merchant);
                             }
@@ -696,10 +690,10 @@ public class Land {
     public void saveMap(String name){
         try{
         File ff; // définir l'arborescence
-        String dirName = "Save\\"+name+"\\";
+        String dirName = "save\\"+name+"\\";
         File dir = new File(dirName);
         boolean isCreated = dir.mkdirs();
-        ff = new File("Save\\"+name+"\\"+ this.name +".txt");
+        ff = new File("save\\"+name+"\\"+ this.name +".txt");
         ArrayList<ArrayList<AppOnMap>> save;
         save = new ArrayList<>();
         save = this.getmap();

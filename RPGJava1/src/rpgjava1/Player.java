@@ -210,7 +210,7 @@ public class Player extends Character implements DealsDamage{
                 save += "warrior,";
                 break;
             case "wizard":
-                save += "wizard";
+                save += "wizard,";
                 break;
             case "thief":
                 save += "thief,";

@@ -47,7 +47,7 @@ public class Mob extends Character implements Looting{
      *
      * @param winner
      */
-    public void defeat(Player winner){
+    public void defeat(AppOnMap winner){
         winner.setExp(winner.getExp() + this.exp);
         Looting.loot(super.getInventory(), winner);
         System.out.println(winner.getName() + " wins " + this.exp + " Exp(s)");
@@ -76,14 +76,16 @@ public class Mob extends Character implements Looting{
         
         String save = "";
         save = super.getSaveText();
-        save += this.exp;
+        save += ","+this.exp;
         
         return save;
     }
     @Override
     public void InitFromSave(String[] save){
-        super.InitFromSave(save[0]);
-        this.exp = Integer.parseInt(save[1]);
+        String[] save2 = {save[0],save[1],save[2],save[3],save[4],save[5],
+            save[6],save[7]};
+        super.InitFromSave(save2);
+        this.exp = Integer.parseInt(save[8]);
         
     }
 }

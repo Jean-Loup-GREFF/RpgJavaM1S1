@@ -100,16 +100,17 @@ public class Merchant extends Character implements Looting{
         
         String save = "";
         save = super.getSaveText();
-        save += this.tariffBuy;
-        save += this.tariffSell;
+        save += ","+this.tariffBuy;
+        save += ","+this.tariffSell;
         
         return save;
     }
     @Override
     public void InitFromSave(String[] save){
-        super.InitFromSave(save[0]);
-        this.tariffBuy = Double.parseDouble(save[1]);
-        this.tariffSell = Double.parseDouble(save[2]);
+        String[] save2 = {save[0],save[1],save[2],save[3],save[4],save[5],save[6],save[7]};
+        super.InitFromSave(save2);
+        this.tariffBuy = Double.parseDouble(save[8]);
+        this.tariffSell = Double.parseDouble(save[9]);
         
     }
 

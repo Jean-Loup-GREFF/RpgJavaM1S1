@@ -7,6 +7,7 @@ package rpgjava1;
 
 import java.util.ArrayList;
 
+
 /**
  *
  * @author Matthieu HUE and Jean-Loup GREFF
