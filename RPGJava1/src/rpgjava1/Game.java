@@ -952,11 +952,11 @@ public class Game {
                                 + this.profiles.get(i)[1]);
                     }
                     if(!valid){System.out.println("Enter a correct number");}
-                    //sc.nextLine();
                     valid = !sc.hasNextInt();
                     if(!valid){choiceP = sc.nextInt();}
-                    if(choiceP<0 || choiceP>=this.profiles.size()){
-                        valid = !valid;
+                    sc.nextLine();
+                    if(choiceP<0 || choiceP>=this.profiles.size() || choice==-1){
+                        valid = true;
                     }
                 }while(valid);
                 initCurrentProfileFromSave(this.profiles.get(choiceP)[0]);
